@@ -1,9 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: './app/src/js/index.js',
+    entry: [
+        './app/src/js/index.js',
+        './app/src/less/styles.less',
+    ],
     output: {
         path: path.resolve(__dirname, 'app/dist/'),
         filename: 'js/index.js',
@@ -25,6 +29,14 @@ module.exports = {
                     loader: 'babel-loader',
                 },
             },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader',
+                ],
+            }
         ],
     },
 
