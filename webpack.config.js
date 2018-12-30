@@ -15,13 +15,15 @@ module.exports = {
 
     // WEBPACK DEV SERVER
     devServer: {
-        contentBase: path.join(__dirname, 'app/dist/'),
+        publicPath: '/',
+        contentBase: path.join(__dirname, 'app/src/'),
         port: 8085,
     },
 
     // MODULE LOADERS
     module: {
         rules: [
+            // Transpile JS using babel loader
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -29,6 +31,7 @@ module.exports = {
                     loader: 'babel-loader',
                 },
             },
+            // Compile less to css
             {
                 test: /\.less$/,
                 use: [
@@ -36,7 +39,25 @@ module.exports = {
                     'css-loader',
                     'less-loader',
                 ],
-            }
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'assets/fonts/'
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.(png|jpg)$/,
+                use: {
+                    loader: 'file-loader?limit=8192',
+                },
+            },
         ],
     },
 
