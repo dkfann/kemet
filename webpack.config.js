@@ -5,13 +5,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: [
-        './app/src/js/index.js',
-        './app/src/less/styles.less',
+        './app/src/index.js',
     ],
     output: {
         path: path.resolve(__dirname, 'app/dist/'),
-        filename: 'js/index.js',
+        filename: '[name].js',
     },
+
+    target: 'web',
 
     // WEBPACK DEV SERVER
     devServer: {
@@ -36,6 +37,7 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'less-loader',
                 ],
@@ -64,8 +66,12 @@ module.exports = {
     // PLUGINS
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].css"
+        }),
         new HtmlWebpackPlugin({
             template: './app/src/index.html',
+            filename: 'index.html',
         }),
     ],
 };
