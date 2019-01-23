@@ -18,7 +18,7 @@ module.exports = {
     devServer: {
         publicPath: '/',
         contentBase: path.join(__dirname, 'app/src/'),
-        port: 8085,
+        port: 8005,
     },
 
     // MODULE LOADERS
