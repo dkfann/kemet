@@ -1,5 +1,4 @@
 const express = require('express');
-// Initialize express instance
 const app = express();
 const path = require('path');
 
@@ -18,5 +17,5 @@ const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    io.emit('testing', { test: 1 });
+    io.emit('testing', { test: 2 });
 });

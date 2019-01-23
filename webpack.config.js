@@ -19,6 +19,14 @@ module.exports = {
         publicPath: '/',
         contentBase: path.join(__dirname, 'app/src/'),
         port: 8005,
+        // This proxy is required for socket.io, which is being hosted from the server,
+        // to have it's requests from the front end be routed to the express server port, not the dev server one
+        proxy: {
+            '/socket.io': {
+                target: 'http://localhost:8000',
+                ws: true,
+            },
+        },
     },
 
     // MODULE LOADERS
