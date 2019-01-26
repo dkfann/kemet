@@ -21,10 +21,8 @@
 </template>
 
 <script>
-import io from 'socket.io-client';
-
 export default {
-    name: 'app',
+        name: 'roomSetup',
     data() {
         return {
             roomCode: '',
@@ -78,83 +76,4 @@ export default {
     }
 }
 </script>
-
-<style>
-    @font-face {
-        font-family: 'Chronicle';
-        src: url('../../assets/fonts/ChronicleDisp-Black.otf');
-    } 
-
-   /* #app {
-        display: grid;
-        background-color: #faf6eb;
-        width: 100vw;
-        height: 100vh;
-        grid-template-columns: 20% 20% 20% 20% 20%;
-        grid-template-rows: 150px 150px 150px;
-        grid-template-areas:
-            "header header header header header"
-            "main main main main main";
-    }
-    */
-
-    #app {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-        background-color: #faf6eb;
-        flex-direction: column;
-        align-items: center;
-        font-family: 'Chronicle';
-    }
-
-    .main-title {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 5rem;
-        grid-area: header;
-    }
-
-    .username-label {
-        margin-right: 1rem;
-    }
-
-    .room-control-container {
-        margin: 0.5rem;
-    }
-
-    .host-room {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        grid-column-start: 2;
-    }
-
-    .join-room {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        grid-column-start: 4;
-    }
-
-    .join-room-label {
-        margin-right: 1rem;
-    }
-
-    .join-room-input {
-        margin-right: 1rem;
-    }
-
-    .room-code {
-        font-family: 'Chronicle';
-        grid-row-start: 3;
-        grid-column-start: 3;
-        font-size: 3rem;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-    }
-</style>
-
 
