@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: [
@@ -51,6 +52,13 @@ module.exports = {
                 ],
             },
             {
+                test: /\.css$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                ],
+            },
+            {
                 test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
                 use: [
                     {
@@ -68,12 +76,17 @@ module.exports = {
                     loader: 'file-loader?limit=8192',
                 },
             },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
         ],
     },
 
     // PLUGINS
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css"
         }),
