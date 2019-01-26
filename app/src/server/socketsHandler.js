@@ -22,7 +22,7 @@ const socketsHandler = ({ server }) => {
         //     host: socket.id,
         // };
         socket.join(roomCode);
-        hostList[socket.id] = roomCode;
+        hostList[socket.id].roomCode = roomCode;
         socketIOServer.sockets.in(roomCode).emit('hostRoom', { roomCode });
     }
 
@@ -39,7 +39,7 @@ const socketsHandler = ({ server }) => {
     }
 
     function handleStartGame() {
-        const gameHandlerInstance = gameHandler();
+        const gameHandlerInstance = gameHandler({ socketIOServer });
 
         return gameHandlerInstance;
     }
@@ -59,10 +59,14 @@ const socketsHandler = ({ server }) => {
             });
 
             socket.on('startGame', () => {
-                const startingGameRoomCode = hostList[socket.id];
+                const startingGameRoomCode = hostList[socket.id].roomCode;
                 console.log('Starting game in room ', hostList[socket.id]);
-                const gameHandlerInstance = handleStartGame();
-                socketIOServer.sockets.in(startingGameRoomCode).emit('sendGameState', { gameState: gameHandlerInstance });
+                hostList[socket.id].gameHandler = gameHandler({ socketIOServer });
+                socketIOServer.sockets.in(startingGameRoomCode).emit('startGame', { gameState: hostList[socket.id].gameHandler });
+            });
+
+            socket.on('selectItem', ({ item }) => {
+                console.log(item);
             });
         });
     }
