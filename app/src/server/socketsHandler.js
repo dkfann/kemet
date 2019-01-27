@@ -28,7 +28,7 @@ const socketsHandler = ({ server }) => {
     function getUsernamesOfRoomUsers({ roomCode }) {
         const usersInRoom = Object.keys(socketIOServer.sockets.adapter.rooms[roomCode].sockets)
             .map((socketId) => {
-                return socketIdToUsernameMap[socketId]
+                return socketIdToUsernameMap[socketId];
             });
 
         return usersInRoom;

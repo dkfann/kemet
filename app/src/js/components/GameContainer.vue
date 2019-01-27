@@ -1,9 +1,10 @@
 <template>
     <div>
-        <div v-for="item in currentGameState.test">
-            <div @click="selectItem(item)" class="item">
-                <div>{{ item.val }}</div>
-                <div>{{ item.owner }}</div>
+        <div v-for="tile in currentGameState.redTiles">
+            <div @click="selectItem(tile)" class="item">
+                <div>{{ tile.key }}</div>
+                <img :src="tile.img" alt=""/>
+                <div>{{ tile.owner }}</div>
             </div>
         </div>
     </div>
