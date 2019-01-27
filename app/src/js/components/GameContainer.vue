@@ -1,8 +1,9 @@
 <template>
     <div>
-        <div v-for="item in currentGameState">
+        <div v-for="item in currentGameState.test">
             <div @click="selectItem(item)" class="item">
-                {{ item.val }}
+                <div>{{ item.val }}</div>
+                <div>{{ item.owner }}</div>
             </div>
         </div>
     </div>
@@ -21,6 +22,11 @@ export default {
         return {
             currentGameState: this.gameState,
         };
+    },
+    created() {
+        this.socket.on('updateGameState', ({ gameState }) => {
+            this.currentGameState = gameState;
+        });
     },
     methods: {
         selectItem(item) {

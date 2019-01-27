@@ -4,7 +4,7 @@ const { gameHandler } = require('./gameHandler');
 const socketsHandler = ({ server }) => {
     const socketIOServer = io(server);
     const hostedRooms = {};
-    const hostList = {};
+    const userMap = {};
 
     function generateRoomCode() {
         let code = '';
@@ -22,7 +22,11 @@ const socketsHandler = ({ server }) => {
         //     host: socket.id,
         // };
         socket.join(roomCode);
-        hostList[socket.id].roomCode = roomCode;
+        hostedRooms[roomCode] = {
+            users: [socket.id],
+            gameHandler: {},
+        };
+        // hostList[socket.id].roomCode = roomCode;
         socketIOServer.sockets.in(roomCode).emit('hostRoom', { roomCode });
     }
 
@@ -30,6 +34,10 @@ const socketsHandler = ({ server }) => {
         console.log(hostedRooms);
         if (hostedRooms[roomCode]) {
             socket.join(roomCode);
+            hostedRooms[roomCode].users = [
+                ...hostedRooms[roomCode].users,
+                socket.id,
+            ];
             socketIOServer.sockets.in(roomCode).emit('joinRoom', { roomCode });
             console.log(hostedRooms);
         }
@@ -44,8 +52,11 @@ const socketsHandler = ({ server }) => {
         return gameHandlerInstance;
     }
 
-    function sendGameStateToSocketsInRoom({ roomCode, gameState }) {
+    function getSocketsCurrentGameHandler({ socket }) {
+        const [socketId, roomCode] = Object.keys(socket.rooms);
+        const gameHandler = hostedRooms[roomCode].gameHandler;
 
+        return gameHandler;
     }
 
     function _init() {
@@ -59,14 +70,20 @@ const socketsHandler = ({ server }) => {
             });
 
             socket.on('startGame', () => {
-                const startingGameRoomCode = hostList[socket.id].roomCode;
-                console.log('Starting game in room ', hostList[socket.id]);
-                hostList[socket.id].gameHandler = gameHandler({ socketIOServer });
-                socketIOServer.sockets.in(startingGameRoomCode).emit('startGame', { gameState: hostList[socket.id].gameHandler });
+                // Grab the socket's room with Object.keys()
+                // The first item will be the socket's id
+                // A user should only be able to be in one room, so use that item as the room code
+                const [socketId, roomCode] = Object.keys(socket.rooms);
+                console.log('Starting game in room ', roomCode);
+                hostedRooms[roomCode].gameHandler = gameHandler({ socketIOServer });
+                socketIOServer.sockets.in(roomCode).emit('startGame', { gameState: hostedRooms[roomCode].gameHandler.gameState });
             });
 
             socket.on('selectItem', ({ item }) => {
-                console.log(item);
+                const gameHandler = getSocketsCurrentGameHandler({ socket });
+                const [socketId, roomCode] = Object.keys(socket.rooms);
+                gameHandler.applySelectItemToGameState({ item, owner: socket.id });
+                socketIOServer.sockets.in(roomCode).emit('updateGameState', { gameState: gameHandler.gameState });
             });
         });
     }

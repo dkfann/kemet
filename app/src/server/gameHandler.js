@@ -1,23 +1,54 @@
 const gameHandler = ({ socketIOServer }) => {
     const gameState = {
-        a: {
-            val: 1,
-        },
-        b: {
-            val: 2,
-        },
-        c: {
-            val: 3,
-        },
+        // a: {
+        //     val: 1,
+        //     owner: null,
+        // },
+        // b: {
+        //     val: 2,
+        //     owner: null,
+        // },
+        // c: {
+        //     val: 3,
+        //     owner: null,
+        // },
+        test: [
+            {
+                val: 1,
+                owner: 'None',
+            },
+            {
+                val: 2,
+                owner: 'None',
+            },
+            {
+                val: 3,
+                owner: 'None',
+            },
+        ],
     };
 
-    function _init() {
-        socketIOServer.on('selectedItem', ({ item }) => {
-            console.log(item);
+    function applySelectItemToGameState({ item, owner }) {
+        gameState.test = gameState.test.map((stuff) => {
+            if (stuff.val === item.val) {
+                return {
+                    ...item,
+                    owner,
+                };
+            }
+
+            return stuff;
         });
     }
 
-    return gameState;
+    function _init() {
+
+    }
+
+    return {
+        gameState,
+        applySelectItemToGameState,
+    };
 }
 
 module.exports = {

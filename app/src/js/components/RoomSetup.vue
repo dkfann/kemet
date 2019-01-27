@@ -14,7 +14,7 @@
             <button class="join-room-button" @click="joinRoom">JOIN ROOM</button>
         </div>
         <div class="room-code">{{ roomCode }}</div>
-        <div v-if="isHost" class="start-game">
+        <div v-if="inRoom" class="start-game">
             <button @click="startGame">Start Game</button>
         </div>
     </div>
@@ -28,7 +28,7 @@ export default {
         return {
             roomCode: '',
             joinCode: '',
-            isHost: false,
+            inRoom: false,
             username: '',
         };
     },
@@ -36,7 +36,7 @@ export default {
         this.socket.on('hostRoom', (data) => {
             console.log('Hosting room: ', data.roomCode);
             this.roomCode = data.roomCode;
-            this.isHost = true;
+            this.inRoom = true;
 
             console.log(data);
         });
