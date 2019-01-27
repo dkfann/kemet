@@ -1,17 +1,5 @@
 const gameHandler = ({ socketIOServer }) => {
     const gameState = {
-        // a: {
-        //     val: 1,
-        //     owner: null,
-        // },
-        // b: {
-        //     val: 2,
-        //     owner: null,
-        // },
-        // c: {
-        //     val: 3,
-        //     owner: null,
-        // },
         test: [
             {
                 val: 1,

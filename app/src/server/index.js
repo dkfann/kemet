@@ -14,40 +14,4 @@ app.get('*', (req, res) => {
 
 const server = app.listen(port);
 
-// const io = require('socket.io')(server);
-
 const socketIOServer = socketsHandler({ server });
-
-// function generateRoomCode() {
-//     let code = '';
-//     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//     for (let n = 0; n < 4; n++) {
-//         code += letters[Math.floor(Math.random() * Math.floor(26))];
-//     }
-
-//     return code;
-// }
-
-// io.on('connection', (socket) => {
-//     socket.join('test');
-//     socket.on('hostRoom', (data) => {
-//         const roomCode = generateRoomCode();
-//         socket.join(roomCode);
-//         console.log(roomCode);
-//         // io.emit('joinRoom', { roomCode });
-//         io.sockets.in(roomCode).emit('joinRoom', { roomCode });
-//         io.of('/').in('test').clients((error, clients) => {
-//             if (error) {
-//                 console.warn(error);
-//                 return;
-//             }
-
-//             console.log(clients)
-//         })
-//     });
-
-//     socket.on('joinRoom', (data) => {
-//         console.log('Joining room: ', data.joinCode);
-//     })
-// });
-
