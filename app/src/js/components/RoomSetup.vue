@@ -1,22 +1,32 @@
 <template>
     <div id="app" class="web-container">
         <div class="main-title">Kemet</div>
-        <div class="room-control-container">
-            <label class="username-label" for="username">Username:</label>
-            <input class="username-input" type="text" v-model="username" placeholder="Enter Username" maxlength="16"> 
+        <div class="prepare-room" v-if="!inRoom">
+            <div class="room-control-container">
+                <label class="username-label" for="username">Username:</label>
+                <input class="username-input" type="text" v-model="username" placeholder="Enter Username" maxlength="16"> 
+            </div>
+            <div class="room-control-container host-room">
+                <button @click="hostRoom">HOST A ROOM</button>
+            </div>
+            <div class="room-control-container join-room">
+                <label class="join-room-label" for="joinCode">Room Code: </label>
+                <input class="join-room-input" v-model="joinCode" type="text">
+                <button class="join-room-button" @click="joinRoom">JOIN ROOM</button>
+            </div>
         </div>
-        <div class="room-control-container host-room">
-            <button @click="hostRoom">HOST A ROOM</button>
+        <div class="room-lobby" v-if="inRoom">
+            <div class="room-code">{{ roomCode }}</div>
+            <div class="start-game">
+                <button @click="startGame">Start Game</button>
+            </div>
+            <div class="connected-users">
+                <div v-for="user in connectedUsers">
+                    <div>{{ user }}</div>
+                </div>
+            </div>
         </div>
-        <div class="room-control-container join-room">
-            <label class="join-room-label" for="joinCode">Room Code: </label>
-            <input class="join-room-input" v-model="joinCode" type="text">
-            <button class="join-room-button" @click="joinRoom">JOIN ROOM</button>
-        </div>
-        <div class="room-code">{{ roomCode }}</div>
-        <div v-if="inRoom" class="start-game">
-            <button @click="startGame">Start Game</button>
-        </div>
+
     </div>
 </template>
 
@@ -30,15 +40,21 @@ export default {
             joinCode: '',
             inRoom: false,
             username: '',
+            connectedUsers: [],
         };
     },
     created() {
-        this.socket.on('hostRoom', (data) => {
-            console.log('Hosting room: ', data.roomCode);
-            this.roomCode = data.roomCode;
+        this.socket.on('hostRoom', ({ roomCode, usersInRoom }) => {
+            console.log('Hosting room: ', roomCode);
+            this.roomCode = roomCode;
             this.inRoom = true;
+            this.connectedUsers = usersInRoom;
+        });
 
-            console.log(data);
+        this.socket.on('joinRoom', ({ roomCode, usersInRoom }) => {
+            this.roomCode = roomCode;
+            this.inRoom = true;
+            this.connectedUsers = usersInRoom;
         });
 
         this.socket.on('sendGameState', (data) => {
@@ -47,10 +63,12 @@ export default {
     },
     methods: {
         hostRoom() {
+            if (!this.username) return;
             this.socket.emit('hostRoom', { username: this.username });
         },
         joinRoom() {
-            this.socket.emit('joinRoom', { roomCode: this.joinCode });
+            if (!this.username) return;
+            this.socket.emit('joinRoom', { roomCode: this.joinCode, username: this.username });
         },
         startGame() {
             this.socket.emit('startGame');

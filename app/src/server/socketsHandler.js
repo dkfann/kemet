@@ -4,7 +4,7 @@ const { gameHandler } = require('./gameHandler');
 const socketsHandler = ({ server }) => {
     const socketIOServer = io(server);
     const hostedRooms = {};
-    const userMap = {};
+    const socketIdToUsernameMap = {};
 
     function generateRoomCode() {
         let code = '';
@@ -16,30 +16,37 @@ const socketsHandler = ({ server }) => {
         return code;
     }
 
-    function hostRoomForSocket({ socket }) {
-        const roomCode = generateRoomCode();
-        // hostedRooms[roomCode] = {
-        //     host: socket.id,
-        // };
+    function addUserToRoom({ socket, roomCode, username, isHosting }) {
         socket.join(roomCode);
         hostedRooms[roomCode] = {
-            users: [socket.id],
+            users: isHosting ? [socket.id] : [...hostedRooms[roomCode].users, socket.id],
             gameHandler: {},
         };
-        // hostList[socket.id].roomCode = roomCode;
-        socketIOServer.sockets.in(roomCode).emit('hostRoom', { roomCode });
+        socketIdToUsernameMap[socket.id] = username;
     }
 
-    function joinRoomForSocket({ socket, roomCode }) {
-        console.log(hostedRooms);
+    function getUsernamesOfRoomUsers({ roomCode }) {
+        const usersInRoom = Object.keys(socketIOServer.sockets.adapter.rooms[roomCode].sockets)
+            .map((socketId) => {
+                return socketIdToUsernameMap[socketId]
+            });
+
+        return usersInRoom;
+    }
+
+    function hostRoomForSocket({ socket, username }) {
+        const roomCode = generateRoomCode();
+
+        addUserToRoom({ socket, roomCode, username, isHosting: true });
+        const usersInRoom = getUsernamesOfRoomUsers({ roomCode });
+        socketIOServer.sockets.in(roomCode).emit('hostRoom', { roomCode, usersInRoom });
+    }
+
+    function joinRoomForSocket({ socket, roomCode, username }) {
         if (hostedRooms[roomCode]) {
-            socket.join(roomCode);
-            hostedRooms[roomCode].users = [
-                ...hostedRooms[roomCode].users,
-                socket.id,
-            ];
-            socketIOServer.sockets.in(roomCode).emit('joinRoom', { roomCode });
-            console.log(hostedRooms);
+            addUserToRoom({ socket, roomCode, username, isHosting: false });
+            const usersInRoom = getUsernamesOfRoomUsers({ roomCode });
+            socketIOServer.sockets.in(roomCode).emit('joinRoom', { roomCode, usersInRoom });
         }
         else {
             console.log('Cannot find room');
@@ -61,12 +68,12 @@ const socketsHandler = ({ server }) => {
 
     function _init() {
         socketIOServer.on('connection', (socket) => {
-            socket.on('hostRoom', (data) => {
-                hostRoomForSocket({ socket });
+            socket.on('hostRoom', ({ username }) => {
+                hostRoomForSocket({ socket, username });
             });
 
-            socket.on('joinRoom', ({ roomCode }) => {
-                joinRoomForSocket({ socket, roomCode });
+            socket.on('joinRoom', ({ roomCode, username }) => {
+                joinRoomForSocket({ socket, roomCode, username });
             });
 
             socket.on('startGame', () => {
@@ -82,7 +89,7 @@ const socketsHandler = ({ server }) => {
             socket.on('selectItem', ({ item }) => {
                 const gameHandler = getSocketsCurrentGameHandler({ socket });
                 const [socketId, roomCode] = Object.keys(socket.rooms);
-                gameHandler.applySelectItemToGameState({ item, owner: socket.id });
+                gameHandler.applySelectItemToGameState({ item, owner: socketIdToUsernameMap[socket.id] });
                 socketIOServer.sockets.in(roomCode).emit('updateGameState', { gameState: gameHandler.gameState });
             });
         });
