@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="game-container">
+        <players-container :players="connectedUsers" />
         <div v-for="tile in currentGameState.redTiles">
             <div @click="selectItem(tile)" class="item">
                 <div>{{ tile.key }}</div>
@@ -11,9 +12,11 @@
 </template>
 
 <script>
+import PlayersContainer from './PlayersContainer.vue';
+
 export default {
     name: 'game-container',
-    props: ['gameState', 'socket'],
+    props: ['gameState', 'socket', 'connectedUsers'],
     computed: {
         gameStateKeys() {
             return Object.keys(this.gameState);
@@ -33,9 +36,8 @@ export default {
         selectItem(item) {
             this.socket.emit('selectItem', { item });
         }
-    }
-
-
+    },
+    components: { PlayersContainer },
 }
 </script>
 

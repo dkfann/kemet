@@ -1,5 +1,5 @@
 const io = require('socket.io');
-const { gameHandler } = require('./gameHandler');
+const { GameHandler } = require('./GameHandler');
 
 const socketsHandler = ({ server }) => {
     const socketIOServer = io(server);
@@ -53,14 +53,9 @@ const socketsHandler = ({ server }) => {
         }
     }
 
-    function handleStartGame() {
-        const gameHandlerInstance = gameHandler({ socketIOServer });
-
-        return gameHandlerInstance;
-    }
-
     function getSocketsCurrentGameHandler({ socket }) {
         const [socketId, roomCode] = Object.keys(socket.rooms);
+        console.trace(hostedRooms[roomCode]);
         const gameHandler = hostedRooms[roomCode].gameHandler;
 
         return gameHandler;
@@ -82,8 +77,11 @@ const socketsHandler = ({ server }) => {
                 // A user should only be able to be in one room, so use that item as the room code
                 const [socketId, roomCode] = Object.keys(socket.rooms);
                 console.log('Starting game in room ', roomCode);
-                hostedRooms[roomCode].gameHandler = gameHandler({ socketIOServer });
-                socketIOServer.sockets.in(roomCode).emit('startGame', { gameState: hostedRooms[roomCode].gameHandler.gameState });
+                hostedRooms[roomCode].gameHandler = new GameHandler({ socketIOServer });
+                socketIOServer.sockets.in(roomCode).emit('startGame', {
+                    gameState: hostedRooms[roomCode].gameHandler.gameState,
+                    connectedUsers: getUsernamesOfRoomUsers({ roomCode }),
+                });
             });
 
             socket.on('selectItem', ({ item }) => {
