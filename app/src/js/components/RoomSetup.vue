@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="web-container">
+    <div id="app" class="room-setup">
         <div class="main-title">Kemet</div>
         <div class="prepare-room" v-if="!inRoom">
             <div class="room-control-container">
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style>
-        @font-face {
+    @font-face {
         font-family: 'Chronicle';
         src: url('../../assets/fonts/ChronicleDisp-Black.otf');
     } 
@@ -96,14 +96,12 @@ export default {
     }
     */
 
-    #app {
+    .room-setup {
         display: flex;
-        width: 100vw;
-        height: 100vh;
-        background-color: #faf6eb;
         flex-direction: column;
         align-items: center;
         font-family: 'Chronicle';
+        width: 100vw;
     }
 
     .main-title {

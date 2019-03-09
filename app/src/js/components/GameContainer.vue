@@ -1,18 +1,13 @@
 <template>
     <div class="game-container">
-        <players-container :players="connectedUsers" />
-        <div v-for="tile in currentGameState.redTiles">
-            <div @click="selectItem(tile)" class="item">
-                <div>{{ tile.key }}</div>
-                <img :src="tile.img" alt=""/>
-                <div>{{ tile.owner }}</div>
-            </div>
-        </div>
+        <players-container :players="connectedUsers" :gameState="currentGameState" :socket="socket"/>
+        <tile-tableau :gameState="currentGameState" :socket="socket" />
     </div>
 </template>
 
 <script>
 import PlayersContainer from './PlayersContainer.vue';
+import TileTableau from './TileTableau.vue';
 
 export default {
     name: 'game-container',
@@ -37,7 +32,7 @@ export default {
             this.socket.emit('selectItem', { item });
         }
     },
-    components: { PlayersContainer },
+    components: { PlayersContainer, TileTableau },
 }
 </script>
 

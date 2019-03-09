@@ -28,6 +28,8 @@ module.exports = {
                 ws: true,
             },
         },
+        hot: false,
+        inline: false,
     },
 
     // MODULE LOADERS

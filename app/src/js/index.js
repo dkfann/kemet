@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import Vue from 'vue';
 import App from './components/App.vue';
-import VueSocketIO from 'vue-socket.io';
+import Vue2TouchEvents from 'vue2-touch-events';
 
 console.log('In src/index.js');
 
@@ -15,6 +15,7 @@ console.log('In src/index.js');
 //     debug: true,
 //     connection: 'http://localhost:8000',
 // }));
+Vue.use(Vue2TouchEvents);
 
 const app = new Vue({
     el: '#root',

@@ -55,7 +55,6 @@ const socketsHandler = ({ server }) => {
 
     function getSocketsCurrentGameHandler({ socket }) {
         const [socketId, roomCode] = Object.keys(socket.rooms);
-        console.trace(hostedRooms[roomCode]);
         const gameHandler = hostedRooms[roomCode].gameHandler;
 
         return gameHandler;
@@ -76,7 +75,6 @@ const socketsHandler = ({ server }) => {
                 // The first item will be the socket's id
                 // A user should only be able to be in one room, so use that item as the room code
                 const [socketId, roomCode] = Object.keys(socket.rooms);
-                console.log('Starting game in room ', roomCode);
                 hostedRooms[roomCode].gameHandler = new GameHandler({ socketIOServer });
                 socketIOServer.sockets.in(roomCode).emit('startGame', {
                     gameState: hostedRooms[roomCode].gameHandler.gameState,

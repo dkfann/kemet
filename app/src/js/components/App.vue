@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="app-container">
         <room-setup v-if="!startedGame" :socket="socket" />
         <game-container
             v-if="startedGame" 
@@ -38,7 +38,12 @@ export default {
 </script>
 
 <style>
-
+    #app-container {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        background-color: #faf6eb;
+    }
 </style>
 
 
