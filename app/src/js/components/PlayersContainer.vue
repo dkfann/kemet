@@ -1,11 +1,26 @@
 <template>
     <div class="players-container">
-        <div v-for="username in usernames" class="players-list">
+        <div class="current-player">
+            {{ currentUser }}
+        </div>
+        <div class="current-player-tiles" v-if="!changingUser" v-for="tile in getPlayerTiles(currentUser)">
+            {{ tile.key }}
+        </div>
+        <div class="change-user-list" v-if="changingUser">
+            Changing User
+        </div>
+        <div class="change-user" @click="changeUser">
+            Change User
+        </div>
+        <!-- <div class="current-player-tiles" v-for="tile in getPlayerTiles(username)">
+            {{ tile.key }}
+        </div> -->
+        <!-- <div v-for="username in usernames" class="players-list">
             <div class="player-username">{{ username }}</div>
             <div class="player-selected-tiles" v-for="tile in getPlayerTiles(username)">
                 {{ tile.key }}
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -14,13 +29,18 @@ export default {
     name: 'players-container',
     props: ['players', 'gameState', 'socket'],
     created() {
-        console.log(this.players);
-        console.log(this.gameState.redTiles);
-        console.log(this.socket);
+        this.socket.on('username', (data) => {
+            this.currentUser = data.username;
+        });
+        // console.log(this.players);
+        // console.log(this.gameState.redTiles);
+        // console.log(this.socket);
     },
     data() {
         return {
             usernames: this.players,
+            currentUser: '',
+            changingUser: false,
         };
     },
     methods: {
@@ -34,6 +54,9 @@ export default {
             });
 
             return playerTiles;
+        },
+        changeUser() {
+            this.changingUser = !this.changingUser;
         }
     },
 }
@@ -48,6 +71,9 @@ export default {
     .players-container {
         background-color: #ffe59f;
         height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .players-list {
@@ -57,8 +83,8 @@ export default {
         font-size: 2rem;
     }
 
-    .player-username {
-
+    .change-user {
+        text-align: right;
     }
 </style>
 

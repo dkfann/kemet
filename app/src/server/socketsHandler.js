@@ -80,6 +80,11 @@ const socketsHandler = ({ server }) => {
                     gameState: hostedRooms[roomCode].gameHandler.gameState,
                     connectedUsers: getUsernamesOfRoomUsers({ roomCode }),
                 });
+                Object.keys(socketIOServer.sockets.adapter.rooms[roomCode].sockets)
+                    .forEach((socketId) => {
+                        // return socketIdToUsernameMap[socketId];
+                        socketIOServer.to(socketId).emit('username', { username: socketIdToUsernameMap[socketId] });
+                    });
             });
 
             socket.on('selectItem', ({ item }) => {

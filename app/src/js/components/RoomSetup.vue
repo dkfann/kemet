@@ -60,6 +60,10 @@ export default {
         this.socket.on('sendGameState', (data) => {
             console.log(data.gameState);
         });
+
+        this.socket.on('username', (data) => {
+            console.log(data.username);
+        });
     },
     methods: {
         hostRoom() {

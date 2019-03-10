@@ -11,7 +11,7 @@ import TileTableau from './TileTableau.vue';
 
 export default {
     name: 'game-container',
-    props: ['gameState', 'socket', 'connectedUsers'],
+    props: ['gameState', 'socket', 'connectedUsers', 'currentUser'],
     computed: {
         gameStateKeys() {
             return Object.keys(this.gameState);
