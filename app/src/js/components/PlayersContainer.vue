@@ -6,10 +6,12 @@
         <div class="current-player-tiles" v-if="!changingUser" v-for="tile in getPlayerTiles(currentUser)">
             {{ tile.key }}
         </div>
-        <div class="change-user-list" v-if="changingUser">
-            Changing User
+        <div class="change-user-list" v-if="changingUser" v-for="username in usernames">
+            <div class="change-to-username" @click="changeToUser(username)">
+                {{ username }}
+            </div>
         </div>
-        <div class="change-user" @click="changeUser">
+        <div class="change-user" @click="showChangeUserList">
             Change User
         </div>
         <!-- <div class="current-player-tiles" v-for="tile in getPlayerTiles(username)">
@@ -55,8 +57,12 @@ export default {
 
             return playerTiles;
         },
-        changeUser() {
+        showChangeUserList() {
             this.changingUser = !this.changingUser;
+        },
+        changeToUser(username) {
+            this.currentUser = username;
+            this.changingUser = false;
         }
     },
 }
