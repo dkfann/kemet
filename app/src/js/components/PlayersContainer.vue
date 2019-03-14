@@ -1,19 +1,25 @@
 <template>
     <div class="players-container">
-        <div class="current-player">
-            {{ currentUser }}
+        <div class="top-nav" v-if="!changingUser">
+            <div class="current-player" @click="showChangeUserList">{{ currentUser }}</div>
+            <div class="view-red-tiles">Red Tiles</div>
+            <div class="view-blue-tiles">Blue Tiles</div>
+            <div class="view-white-tiles">White Tiles</div>
         </div>
-        <div class="current-player-tiles" v-if="!changingUser" v-for="tile in getPlayerTiles(currentUser)">
-            {{ tile.key }}
+
+        <div class="current-player-tiles" v-if="!changingUser">
+            <div class="current-red-tiles" v-for="tile in getPlayerRedTiles(currentUser)">
+                {{ tile.key }}
+            </div>
         </div>
-        <div class="change-user-list" v-if="changingUser" v-for="username in usernames">
+        <div class="change-user-list" :key="username" v-if="changingUser" v-for="username in usernames">
             <div class="change-to-username" @click="changeToUser(username)">
                 {{ username }}
             </div>
         </div>
-        <div class="change-user" @click="showChangeUserList">
+        <!-- <div class="change-user" @click="showChangeUserList">
             Change User
-        </div>
+        </div> --> 
         <!-- <div class="current-player-tiles" v-for="tile in getPlayerTiles(username)">
             {{ tile.key }}
         </div> -->
@@ -57,6 +63,17 @@ export default {
 
             return playerTiles;
         },
+        getPlayerRedTiles(username) {
+            const playerRedTiles = [];
+
+            Object.keys(this.gameState.redTiles).forEach(key => {
+                if (this.gameState.redTiles[key].owner === username) {
+                    playerRedTiles.push(this.gameState.redTiles[key]);
+                }
+            });
+
+            return playerRedTiles;
+        },
         showChangeUserList() {
             this.changingUser = !this.changingUser;
         },
@@ -79,7 +96,7 @@ export default {
         height: 20vh;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        font-family: 'Chronicle';
     }
 
     .players-list {
@@ -91,6 +108,12 @@ export default {
 
     .change-user {
         text-align: right;
+    }
+
+    .top-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        margin-bottom: 1rem;
     }
 </style>
 
