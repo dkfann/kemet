@@ -10,7 +10,7 @@ const socketsHandler = ({ server }) => {
         let code = '';
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         for (let n = 0; n < 4; n++) {
-            code += letters[Math.floor(Math.random() * Math.floor(26))];
+            code += letters[Math.floor(Math.random() * 26)];
         }
 
         return code;
