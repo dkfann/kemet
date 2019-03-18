@@ -9,7 +9,7 @@
 
         <div class="current-player-tiles" v-if="!changingUser">
             <div class="current-red-tiles" v-for="tile in getPlayerRedTiles(currentUser)">
-                {{ tile.key }}
+                {{ tile }}
             </div>
         </div>
         <div class="change-user-list" :key="username" v-if="changingUser" v-for="username in usernames">
@@ -53,26 +53,22 @@ export default {
     },
     methods: {
         getPlayerTiles(username) {
-            const playerTiles = [];
-
-            Object.keys(this.gameState.redTiles).forEach(key => {
-                if (this.gameState.redTiles[key].owner === username) {
-                    playerTiles.push(this.gameState.redTiles[key]);
-                }
-            });
-
-            return playerTiles;
+            return this.gameState[username];
         },
         getPlayerRedTiles(username) {
             const playerRedTiles = [];
 
-            Object.keys(this.gameState.redTiles).forEach(key => {
-                if (this.gameState.redTiles[key].owner === username) {
-                    playerRedTiles.push(this.gameState.redTiles[key]);
-                }
-            });
+            console.log(this.gameState[username]);
 
-            return playerRedTiles;
+            return this.gameState[username];
+
+            // Object.keys(this.gameState.redTiles).forEach(key => {
+            //     if (this.gameState.redTiles[key].owner === username) {
+            //         playerRedTiles.push(this.gameState.redTiles[key]);
+            //     }
+            // });
+
+            // return playerRedTiles;
         },
         showChangeUserList() {
             this.changingUser = !this.changingUser;

@@ -1,22 +1,15 @@
 const { getInitialGameState } = require('./kemetTiles');
 
 class GameHandler {
-    constructor({ socketIOServer }) {
+    constructor({ socketIOServer, usernames }) {
         this.socketIOServer = socketIOServer;
-        this.gameState = getInitialGameState();
+        this.gameState = getInitialGameState(usernames);
     }
 
-    applySelectItemToGameState({ item, owner }) {
-        this.gameState.redTiles = this.gameState.redTiles.map((currTile) => {
-            if (currTile.key === item.key) {
-                return {
-                    ...currTile,
-                    owner,
-                };
-            }
+    applySelectTileToGameState({ tileId, owner }) {
+        if (!this.gameState[owner]) return;
 
-            return currTile;
-        });
+        this.gameState[owner].push(tileId);
     }
 }
 

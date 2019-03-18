@@ -2,8 +2,8 @@
         <div class="tableau">
             <siema ref="siema">
                 <div class="red-tiles">
-                    <div @click="selectTile(tile)" class="tile" v-for="tile in gameState.redTiles" :key="tile.id">
-                        <div>{{ tile.key }}</div>
+                    <div @click="selectTile(tile)" class="tile" v-for="tile in this.tiles.redTiles" :key="tile.id">
+                        <div>{{ tile.title }}</div>
                         <img :src="tile.img" alt="">
                         <div>{{ tile.owner }}</div>
                     </div>
@@ -20,17 +20,20 @@
 </template>
 
 <script>
+    import generateTiles from '../tiles/tileUtils';
     export default {
         name: 'tile-tableau',
         props: ['gameState', 'socket'],
         created() {
+            this.tiles = generateTiles();
+            console.log(this.tiles);
         },
         data() {
             return {};
         },
         methods: {
             selectTile(tile) {
-                this.socket.emit('selectItem', { item: tile });
+                this.socket.emit('selectTile', { tileId: tile.id });
             },
             movingHandler(event) {
                 // console.log(event);

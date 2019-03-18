@@ -54,8 +54,11 @@ const socketsHandler = ({ server }) => {
     }
 
     function getSocketsCurrentGameHandler({ socket }) {
+        let gameHandler = {};
         const [socketId, roomCode] = Object.keys(socket.rooms);
-        const gameHandler = hostedRooms[roomCode].gameHandler;
+        if (hostedRooms[roomCode]) {
+            gameHandler = hostedRooms[roomCode].gameHandler;
+        }
 
         return gameHandler;
     }
@@ -75,7 +78,8 @@ const socketsHandler = ({ server }) => {
                 // The first item will be the socket's id
                 // A user should only be able to be in one room, so use that item as the room code
                 const [socketId, roomCode] = Object.keys(socket.rooms);
-                hostedRooms[roomCode].gameHandler = new GameHandler({ socketIOServer });
+                const usernames = getUsernamesOfRoomUsers({ roomCode });
+                hostedRooms[roomCode].gameHandler = new GameHandler({ socketIOServer, usernames });
                 socketIOServer.sockets.in(roomCode).emit('startGame', {
                     gameState: hostedRooms[roomCode].gameHandler.gameState,
                     connectedUsers: getUsernamesOfRoomUsers({ roomCode }),
@@ -87,10 +91,10 @@ const socketsHandler = ({ server }) => {
                     });
             });
 
-            socket.on('selectItem', ({ item }) => {
+            socket.on('selectTile', ({ tileId }) => {
                 const gameHandler = getSocketsCurrentGameHandler({ socket });
                 const [socketId, roomCode] = Object.keys(socket.rooms);
-                gameHandler.applySelectItemToGameState({ item, owner: socketIdToUsernameMap[socket.id] });
+                gameHandler.applySelectTileToGameState({ tileId, owner: socketIdToUsernameMap[socket.id] });
                 socketIOServer.sockets.in(roomCode).emit('updateGameState', { gameState: gameHandler.gameState });
             });
         });

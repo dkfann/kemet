@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "webpack-dev-server --mode development --open",
     "start": "node app/src/server/index.js",
-    "server": "nodemon app/src/server/index.js --PORT 8000",
+    "start:server": "nodemon app/src/server/index.js --PORT 8000",
     "heroku-postbuild": "webpack -p",
     "build": "webpack -p",
     "web": "node app/src/server/index.js"
@@ -46,7 +46,7 @@
     "mini-css-extract-plugin": "^0.4.5",
     "nodemon": "^1.18.9",
     "style-loader": "^0.23.0",
-    "typescript": "^3.2.4",
+    "typescript": "^3.3.3333",
     "url-loader": "^1.1.1",
     "vue-template-compiler": "^2.5.22",
     "webpack-dev-middleware": "^3.5.1",
