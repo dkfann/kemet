@@ -6,7 +6,6 @@
             <div class="view-blue-tiles">Blue Tiles</div>
             <div class="view-white-tiles">White Tiles</div>
         </div>
-
         <div class="current-player-tiles" v-if="!changingUser">
             <div class="current-red-tiles" v-for="tile in getPlayerRedTiles(currentUser)">
                 {{ tile }}
