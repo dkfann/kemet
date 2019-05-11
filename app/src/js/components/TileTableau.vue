@@ -10,7 +10,7 @@
                 </div> -->
                 <!-- <tile-section color="red"></tile-section> -->
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1})">
+                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1})">
                         <div>{{ tile.title }}</div>
                         <img :src="tile.img" alt="">
                         <div>{{ tile.owner }}</div>
@@ -37,8 +37,66 @@
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 1})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 2})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 3})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 4})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 1})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 2})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 3})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
+                <div class="tile-container">
+                    <div class="tile" @click="selectTile(tile)" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 4})">
+                        <div>{{ tile.title }}</div>
+                        <img :src="tile.img" alt="">
+                        <div>{{ tile.owner }}</div>
+                    </div>
+                </div>
             </siema>
-            <div @click="go">TEST GOTO</div>
+            <div @click="goToRedTiles">Red Tiles</div>
+            <div @click="goToBlueTiles">Blue Tiles</div>
+            <div @click="goToWhiteTiles">White Tiles</div>
         </div>
 </template>
 
@@ -67,8 +125,14 @@
             movingHandler(event) {
                 // console.log(event);
             },
-            go() {
-                this.$refs.siema.goTo(2);
+            goToRedTiles() {
+                this.$refs.siema.goTo(0);
+            },
+            goToBlueTiles() {
+                this.$refs.siema.goTo(4);
+            },
+            goToWhiteTiles() {
+                this.$refs.siema.goTo(8);
             }
         },
         components: { TileSection },

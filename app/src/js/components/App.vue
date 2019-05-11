@@ -29,6 +29,7 @@ export default {
         this.socket = io.connect();
         this.socket.on('startGame', ({ gameState, connectedUsers }) => {
             this.startedGame = true;
+            console.log(gameState);
             this.gameState = gameState;
             this.connectedUsers = connectedUsers;
         })

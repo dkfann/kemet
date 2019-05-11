@@ -7,12 +7,12 @@
             <div class="view-white-tiles">White Tiles</div>
         </div>
         <div class="current-player-tiles" v-if="!changingUser">
-            <div class="current-red-tiles" v-for="tile in getPlayerRedTiles(currentUser)">
-                {{ tile }}
+            <div class="current-red-tiles" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
+                {{ tile.title }} - {{ tile.desc }}
             </div>
         </div>
-        <div class="change-user-list" :key="username" v-if="changingUser" v-for="username in usernames">
-            <div class="change-to-username" @click="changeToUser(username)">
+        <div class="change-user-list" v-if="changingUser" >
+            <div class="change-to-username" :key="username" v-for="username in usernames" @click="changeToUser(username)">
                 {{ username }}
             </div>
         </div>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import generateTiles from '../tiles/tileUtils';
+
 export default {
     name: 'players-container',
     props: ['players', 'gameState', 'socket'],
@@ -48,26 +50,29 @@ export default {
             usernames: this.players,
             currentUser: '',
             changingUser: false,
+            tileData: generateTiles(),
         };
     },
     methods: {
         getPlayerTiles(username) {
-            return this.gameState[username];
+            if (!username) return;
+            const playerTiles = [];
+
+            this.gameState[username].forEach(tileId => {
+                playerTiles.push(this.tileData[tileId]);
+            });
+
+            return playerTiles;
         },
         getPlayerRedTiles(username) {
+            if (!username) return;
             const playerRedTiles = [];
 
-            console.log(this.gameState[username]);
+            this.gameState[username].forEach(tileId => {
+                playerRedTiles.push(this.tileData[tileId]);
+            });
 
-            return this.gameState[username];
-
-            // Object.keys(this.gameState.redTiles).forEach(key => {
-            //     if (this.gameState.redTiles[key].owner === username) {
-            //         playerRedTiles.push(this.gameState.redTiles[key]);
-            //     }
-            // });
-
-            // return playerRedTiles;
+            return playerRedTiles;
         },
         showChangeUserList() {
             this.changingUser = !this.changingUser;
