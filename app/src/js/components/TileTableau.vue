@@ -163,12 +163,10 @@
     }
 
     .tile-title {
-        font-family: 'Separat';
         text-transform: uppercase;
     }
 
     .goto-tiles {
-        font-family: 'Separat';
         display: flex;
         flex-direction: row;
         justify-content: space-around;

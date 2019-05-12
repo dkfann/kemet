@@ -92,6 +92,11 @@ export default {
         src: url('../../assets/fonts/Separat-Regular.otf');
     }
 
+    @font-face {
+        font-family: 'Tiempo Text';
+        src: url('../../assets/fonts/TiemposTextTest-Regular.woff');
+    }
+
    /* #app {
         display: grid;
         background-color: #faf6eb;
@@ -109,7 +114,6 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: 'Separat';
         width: 100vw;
     }
 
@@ -152,7 +156,6 @@ export default {
     }
 
     .room-code {
-        font-family: 'Separat';
         grid-row-start: 3;
         grid-column-start: 3;
         font-size: 3rem;

@@ -109,7 +109,6 @@ export default {
         height: 20vh;
         display: flex;
         flex-direction: column;
-        font-family: 'Separat';
         overflow-y: scroll;
         padding: 0.5rem;
     }
@@ -117,7 +116,6 @@ export default {
     .players-list {
         display: flex;
         flex-direction: column;
-        font-family: 'Separat';
         font-size: 2rem;
     }
 

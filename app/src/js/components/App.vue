@@ -39,11 +39,17 @@ export default {
 </script>
 
 <style>
+    @font-face {
+        font-family: 'Tiempo Text';
+        src: url('../../assets/fonts/TiemposTextTest-Regular.woff');
+    }
+
     #app-container {
         display: flex;
         width: 100vw;
         height: 100vh;
         background-color: #faf6eb;
+        font-family: 'Tiempo Text';
     }
 </style>
 
