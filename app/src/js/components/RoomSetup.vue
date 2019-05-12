@@ -88,11 +88,6 @@ export default {
     } 
 
     @font-face {
-        font-family: 'Separat';
-        src: url('../../assets/fonts/Separat-Regular.otf');
-    }
-
-    @font-face {
         font-family: 'Tiempo Text';
         src: url('../../assets/fonts/TiemposTextTest-Regular.woff');
     }

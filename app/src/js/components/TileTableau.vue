@@ -135,11 +135,6 @@
 
 
 <style>
-    @font-face {
-        font-family: 'Separat';
-        src: url('../../assets/fonts/Separat-Regular.otf');
-    }
-
     .tableau {
         width: 100vw;
     }

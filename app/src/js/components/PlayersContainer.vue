@@ -99,17 +99,11 @@ export default {
         src: url('../../assets/fonts/ChronicleDisp-Black.otf');
     }
 
-    @font-face {
-        font-family: 'Separat';
-        src: url('../../assets/fonts/Separat-Regular.otf');
-    }
-
     .players-container {
         background-color: #ffe59f;
         height: 20vh;
         display: flex;
         flex-direction: column;
-        overflow-y: scroll;
         padding: 0.5rem;
     }
 
@@ -132,6 +126,10 @@ export default {
     .red-tile { color: red; }
     .blue-tile { color: blue; }
     .white-tile { color: white; }
+
+    .current-player-tiles {
+        overflow-y: scroll;
+    }
 
 </style>
 
