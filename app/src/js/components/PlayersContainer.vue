@@ -7,7 +7,7 @@
             <div class="view-white-tiles">White Tiles</div>
         </div>
         <div class="current-player-tiles" v-if="!changingUser">
-            <div class="current-red-tiles" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
+            <div :class="tileClass(tile.id)" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
                 {{ tile.title }} - {{ tile.desc }}
             </div>
         </div>
@@ -51,6 +51,14 @@ export default {
             currentUser: '',
             changingUser: false,
             tileData: generateTiles(),
+            tileClass: function(id) {
+                return {
+                    'player-tile': true,
+                    'red-tile': id >= 0 && id <= 15,
+                    'blue-tile': id >= 16 && id <= 31,
+                    'white-tile': id > 32,
+                };
+            },
         };
     },
     methods: {
@@ -82,6 +90,25 @@ export default {
             this.changingUser = false;
         }
     },
+    computed: {
+        playerTile: function(id) {
+            let classname = 'player-tile ';
+
+            switch(id) {
+                case id >= 0 && id <= 15:
+                    classname += 'red-tile ';
+                    break;
+                case id >= 16 && id <= 31:
+                    classname += 'blue-tile';
+                    break;
+                case id >= 32:
+                    classname += 'white-tile';
+                    break;
+            }
+
+            return { [classname]: true };
+        },
+    }
 }
 </script>
 
@@ -97,6 +124,7 @@ export default {
         display: flex;
         flex-direction: column;
         font-family: 'Chronicle';
+        overflow-y: scroll;
     }
 
     .players-list {
@@ -115,5 +143,10 @@ export default {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         margin-bottom: 1rem;
     }
+
+    .red-tile { color: red; }
+    .blue-tile { color: blue; }
+    .white-tile { color: white; }
+
 </style>
 

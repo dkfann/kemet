@@ -234,81 +234,97 @@ function generateWhiteTiles() {
             title: 'Priest 1',
             img: `${imagePath}/priest_1.png`,
             id: 32,
+            desc: '+1 Ankh when Praying'
         },
         33: {
             title: 'Priest 2',
             img: `${imagePath}/priest_2.png`,
             id: 33,
+            desc: '+1 Ankh when Praying',
         },
         34: {
             title: 'Priestess 1',
             img: `${imagePath}/priestess_1.png`,
             id: 34,
+            desc: '-1 Ankh cost for Power tiles',
         },
         35: {
             title: 'Priestess 2',
             img: `${imagePath}/priestess_2.png`,
             id: 35,
+            desc: '-1 Ankh cost for Power tiles',
         },
         36: {
             title: 'Slaves',
             img: `${imagePath}/slaves.png`,
             id: 36,
+            desc: '-1 Ankh cost for Raising Pyramid',
         },
         37: {
             title: 'High Priest',
             img: `${imagePath}/high_priest.png`,
             id: 37,
+            desc: '+2 Ankh during Night Phase',
         },
         38: {
             title: 'Crusade',
             img: `${imagePath}/crusade.png`,
             id: 38,
+            desc: '+2 Ankh for each unit you destroy in battle',
         },
         39: {
             title: 'Divine Boon',
             img: `${imagePath}/divine_boon.png`,
             id: 39,
+            desc: '+1 DI Card during Night Phase',
         },
         40: {
             title: 'Hand of God',
             img: `${imagePath}/hand_of_god.png`,
             id: 40,
+            desc: 'Raise a pyramid one level for free during Night Phase',
         },
         41: {
             title: 'Vision',
             img: `${imagePath}/vision.png`,
             id: 41,
+            desc: 'Draw 5 DI, pick 1 during Night Phase',
         },
         42: {
             title: 'Holy War',
             img: `${imagePath}/holy_war.png`,
             id: 42,
+            desc: '+4 Ankh when winning battle (attack or defense)',
         },
         43: {
             title: 'Victory Point',
             img: `${imagePath}/victory_point_white.png`,
             id: 43,
+            desc: '+1 VP',
         },
         44: {
             title: 'Priest Of Ra',
             img: `${imagePath}/priest_of_ra.png`,
             id: 44,
+            desc: '-1 Ankh cost when spending',
         },
         45: {
             title: 'Priest of Amon',
             img: `${imagePath}/priest_of_amon.png`,
             id: 45,
+            desc: '+5 Ankh during Night phase',
         },
         46: {
             title: 'The Mummy',
             img: `${imagePath}/the_mummy.png`,
             id: 46,
+            desc: 'Linked troops: +1 Movement, +2 Strength, +1 DI card during Night phase',
         },
         47: {
             title: 'Act of God',
             img: `${imagePath}/act_of_god_white.png`,
             id: 47,
+            desc: '+1 Action Token'
         },
     };
 

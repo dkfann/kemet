@@ -1,14 +1,6 @@
 <template>
         <div class="tableau">
             <siema ref="siema">
-                <!-- <div class="red-tiles">
-                    <div @click="selectTile(tile)" class="tile" v-for="tile in this.tiles.redTiles.level_1" :key="tile.id">
-                        <div>{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
-                        <div>{{ tile.owner }}</div>
-                    </div>
-                </div> -->
-                <!-- <tile-section color="red"></tile-section> -->
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1})">
                         <div>{{ tile.title }}</div>
