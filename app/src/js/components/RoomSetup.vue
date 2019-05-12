@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="room-setup">
-        <div class="main-title">Kemet</div>
+        <div class="main-title">KEMET</div>
         <div class="prepare-room" v-if="!inRoom">
             <div class="room-control-container">
                 <label class="username-label" for="username">Username:</label>
@@ -87,6 +87,11 @@ export default {
         src: url('../../assets/fonts/ChronicleDisp-Black.otf');
     } 
 
+    @font-face {
+        font-family: 'Separat';
+        src: url('../../assets/fonts/Separat-Regular.otf');
+    }
+
    /* #app {
         display: grid;
         background-color: #faf6eb;
@@ -104,7 +109,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-family: 'Chronicle';
+        font-family: 'Separat';
         width: 100vw;
     }
 
@@ -147,7 +152,7 @@ export default {
     }
 
     .room-code {
-        font-family: 'Chronicle';
+        font-family: 'Separat';
         grid-row-start: 3;
         grid-column-start: 3;
         font-size: 3rem;

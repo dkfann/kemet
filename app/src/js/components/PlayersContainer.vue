@@ -2,9 +2,9 @@
     <div class="players-container">
         <div class="top-nav" v-if="!changingUser">
             <div class="current-player" @click="showChangeUserList">{{ currentUser }}</div>
-            <div class="view-red-tiles">Red Tiles</div>
+            <!-- <div class="view-red-tiles">Red Tiles</div>
             <div class="view-blue-tiles">Blue Tiles</div>
-            <div class="view-white-tiles">White Tiles</div>
+            <div class="view-white-tiles">White Tiles</div> -->
         </div>
         <div class="current-player-tiles" v-if="!changingUser">
             <div :class="tileClass(tile.id)" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
@@ -56,7 +56,7 @@ export default {
                     'player-tile': true,
                     'red-tile': id >= 0 && id <= 15,
                     'blue-tile': id >= 16 && id <= 31,
-                    'white-tile': id > 32,
+                    'white-tile': id >= 32,
                 };
             },
         };
@@ -90,25 +90,6 @@ export default {
             this.changingUser = false;
         }
     },
-    computed: {
-        playerTile: function(id) {
-            let classname = 'player-tile ';
-
-            switch(id) {
-                case id >= 0 && id <= 15:
-                    classname += 'red-tile ';
-                    break;
-                case id >= 16 && id <= 31:
-                    classname += 'blue-tile';
-                    break;
-                case id >= 32:
-                    classname += 'white-tile';
-                    break;
-            }
-
-            return { [classname]: true };
-        },
-    }
 }
 </script>
 
@@ -118,19 +99,25 @@ export default {
         src: url('../../assets/fonts/ChronicleDisp-Black.otf');
     }
 
+    @font-face {
+        font-family: 'Separat';
+        src: url('../../assets/fonts/Separat-Regular.otf');
+    }
+
     .players-container {
         background-color: #ffe59f;
         height: 20vh;
         display: flex;
         flex-direction: column;
-        font-family: 'Chronicle';
+        font-family: 'Separat';
         overflow-y: scroll;
+        padding: 0.5rem;
     }
 
     .players-list {
         display: flex;
         flex-direction: column;
-        font-family: 'Chronicle';
+        font-family: 'Separat';
         font-size: 2rem;
     }
 
