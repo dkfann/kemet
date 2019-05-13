@@ -1,5 +1,5 @@
 const io = require('socket.io');
-const { GameHandler } = require('./GameHandler.js');
+const { GameHandler } = require('./gameHandler');
 
 const socketsHandler = ({ server }) => {
     const socketIOServer = io(server);

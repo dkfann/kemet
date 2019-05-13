@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: [
@@ -74,9 +76,15 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg)$/,
-                use: {
-                    loader: 'file-loader?limit=8192',
-                },
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'assets/images/',
+                        },
+                    }
+                ],
             },
             {
                 test: /\.vue$/,
@@ -87,6 +95,10 @@ module.exports = {
 
     // PLUGINS
     plugins: [
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([
+            { from: 'app/src/assets/images', to: 'assets/images' },
+        ]),
         new webpack.HotModuleReplacementPlugin(),
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({

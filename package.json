@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "webpack-dev-server --mode development --open",
-    "start": "node app/dist/main.js",
+    "start": "node app/src/server/index.js",
     "start:server": "nodemon app/src/server/index.js --PORT 8000",
     "heroku-postbuild": "webpack -p",
     "build": "webpack -p",
@@ -40,6 +40,8 @@
     "@types/express": "^4.16.0",
     "@types/ws": "^6.0.1",
     "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^2.0.2",
+    "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
     "less": "^3.8.1",

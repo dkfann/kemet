@@ -6,25 +6,10 @@ import Siema from 'vue2-siema';
 
 console.log('In src/index.js');
 
-// const socket = io.connect();
-
-// socket.on('testing', (test) => {
-//     console.log(test);
-// });
-
-// Vue.use(new VueSocketIO({
-//     debug: true,
-//     connection: 'http://localhost:8000',
-// }));
 Vue.use(Vue2TouchEvents);
 Vue.use(Siema);
 
 const app = new Vue({
     el: '#root',
     render: h => h(App),
-    // sockets: {
-    //     connect() {
-    //         console.log('socket connected');
-    //     },
-    // },
 });
