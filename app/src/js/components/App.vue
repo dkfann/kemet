@@ -44,12 +44,17 @@ export default {
         src: url('../../assets/fonts/TiemposTextTest-Regular.woff');
     }
 
+    @font-face {
+        font-family: 'Feijoa';
+        src: url('../../assets/fonts/Feijoa-Display.woff');
+    }
+
     #app-container {
         display: flex;
         width: 100vw;
         height: 100vh;
         background-color: #faf6eb;
-        font-family: 'Tiempo Text';
+        font-family: 'Feijoa';
     }
 </style>
 

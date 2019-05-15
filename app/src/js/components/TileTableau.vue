@@ -4,84 +4,96 @@
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 2})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 3})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 4})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 1})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 2})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 3})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 4})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 1})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 2})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 3})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
                     <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 4})">
                         <div class="tile-title">{{ tile.title }}</div>
-                        <img :src="tile.img" alt="">
+                        <img class="tile-img" :src="tile.img" alt="">
+                        <div class="tile-desc">{{ tile.desc }}</div>
                         <div>{{ tile.owner }}</div>
                     </div>
                 </div>
@@ -135,6 +147,11 @@
 
 
 <style>
+    @font-face {
+        font-family: 'Feijoa Bold';
+        src: url('../../assets/fonts/Feijoa-Bold.woff');
+    }
+
     .tableau {
         width: 100vw;
     }
@@ -150,15 +167,28 @@
 
     .tile {
         display: flex;
-        justify-content: center;
+        justify-content: end;
         align-items: center;
         flex-direction: column;
         font-size: 1rem;
         padding: 1rem;
     }
 
+    .tile-img {
+        width: auto;
+        height: 15vh;
+    }
+
     .tile-title {
         text-transform: uppercase;
+        white-space: nowrap;
+        font-size: 0.75rem;
+        font-family: 'Feijoa Bold';
+    }
+
+    .tile-desc {
+        font-size: 0.65rem;
+        text-align: center;
     }
 
     .goto-tiles {

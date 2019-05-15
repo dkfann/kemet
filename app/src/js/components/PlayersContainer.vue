@@ -8,7 +8,9 @@
         </div>
         <div class="current-player-tiles" v-if="!changingUser">
             <div :class="tileClass(tile.id)" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
-                {{ tile.title }} - {{ tile.desc }}
+                <div class="tile-info">
+                    {{ tile.title }}: <span class="tile-info-desc">{{ tile.desc }}</span>
+                </div>
             </div>
         </div>
         <div class="change-user-list" v-if="changingUser" >
@@ -99,6 +101,11 @@ export default {
         src: url('../../assets/fonts/ChronicleDisp-Black.otf');
     }
 
+    @font-face {
+        font-family: 'Feijoa Italic';
+        src: url('../../assets/fonts/Feijoa-MediumItalic.woff');
+    }
+
     .players-container {
         background-color: #ffe59f;
         height: 20vh;
@@ -129,6 +136,10 @@ export default {
 
     .current-player-tiles {
         overflow-y: scroll;
+    }
+
+    .tile-info-desc {
+        font-family: 'Feijoa Italic';
     }
 
 </style>
