@@ -331,9 +331,19 @@ function generateWhiteTiles() {
     return whiteTiles;
 }
 
-export function generateTilesByColorAndLevel({ color, level}) {
+export function generateTilesByColorAndLevel({ color, level, gameState }) {
     let tiles = null;
     let color_id_adjustment = null;
+    let selectedTiles = [];
+
+    if (gameState) {
+        Object.keys(gameState).forEach(key => {
+            selectedTiles.push(...gameState[key]);
+        });
+    }
+
+    console.log(selectedTiles);
+
     switch (color) {
         case 'red':
             tiles = generateRedTiles();
@@ -358,5 +368,12 @@ export function generateTilesByColorAndLevel({ color, level}) {
         idsToGrab.push(startId++);
     }
 
-    return idsToGrab.map(id => tiles[id]);
+    return idsToGrab
+            .map(id => {
+                if (selectedTiles.includes(id)) {
+                    tiles[id].owner = 1;
+                }
+                console.log(tiles[id]);
+                return tiles[id];
+            });
 }

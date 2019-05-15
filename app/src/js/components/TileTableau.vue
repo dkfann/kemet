@@ -2,7 +2,7 @@
         <div class="tableau">
             <siema ref="siema">
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1})">
+                    <div :class="tileClass(tile)" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1, gameState })">
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
@@ -122,10 +122,16 @@
         data() {
             return {
                 generateTilesByColorAndLevel,
+                tileClass: function(tile) {
+                    return {
+                        'tile': true,
+                        'is-taken': !!tile.owner,
+                    };
+                }
             };
         },
         methods: {
-            selectTile(tile) {
+            selectTile(tile, $event) {
                 this.socket.emit('selectTile', { tileId: tile.id });
             },
             movingHandler(event) {
@@ -140,6 +146,11 @@
             goToWhiteTiles() {
                 this.$refs.siema.goTo(8);
             }
+        },
+        watch: {
+            gameState: function(val) {
+
+            },
         },
         components: { TileSection },
     }
@@ -196,6 +207,10 @@
         flex-direction: row;
         justify-content: space-around;
         text-transform: uppercase;
+    }
+
+    .is-taken {
+        filter: grayscale(1);
     }
 </style>
 

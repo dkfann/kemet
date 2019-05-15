@@ -1,7 +1,8 @@
 <template>
     <div class="players-container">
         <div class="top-nav" v-if="!changingUser">
-            <div class="current-player" @click="showChangeUserList">{{ currentUser }}</div>
+            <div class="current-player">{{ currentUser }}</div>
+            <div class="change-player" @click="showChangeUserList">Change Player</div>
             <!-- <div class="view-red-tiles">Red Tiles</div>
             <div class="view-blue-tiles">Blue Tiles</div>
             <div class="view-white-tiles">White Tiles</div> -->
@@ -125,9 +126,11 @@ export default {
     }
 
     .top-nav {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        /* display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr; */
+        display: flex;
         margin-bottom: 1rem;
+        justify-content: space-between;
     }
 
     .red-tile { color: red; }
