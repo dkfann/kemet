@@ -2,12 +2,14 @@
     <div class="game-container">
         <players-container :players="connectedUsers" :gameState="currentGameState" :socket="socket"/>
         <tile-tableau :gameState="currentGameState" :socket="socket" />
+        <log-container :socket="socket" />
     </div>
 </template>
 
 <script>
 import PlayersContainer from './PlayersContainer.vue';
 import TileTableau from './TileTableau.vue';
+import LogContainer from './LogContainer.vue';
 
 export default {
     name: 'game-container',
@@ -32,7 +34,7 @@ export default {
             this.socket.emit('selectItem', { item });
         }
     },
-    components: { PlayersContainer, TileTableau },
+    components: { PlayersContainer, TileTableau, LogContainer },
 }
 </script>
 

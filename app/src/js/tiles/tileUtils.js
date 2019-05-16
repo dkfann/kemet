@@ -342,8 +342,6 @@ export function generateTilesByColorAndLevel({ color, level, gameState }) {
         });
     }
 
-    console.log(selectedTiles);
-
     switch (color) {
         case 'red':
             tiles = generateRedTiles();
@@ -373,7 +371,6 @@ export function generateTilesByColorAndLevel({ color, level, gameState }) {
                 if (selectedTiles.includes(id)) {
                     tiles[id].owner = 1;
                 }
-                console.log(tiles[id]);
                 return tiles[id];
             });
 }

@@ -86,7 +86,6 @@ const socketsHandler = ({ server }) => {
                 });
                 Object.keys(socketIOServer.sockets.adapter.rooms[roomCode].sockets)
                     .forEach((socketId) => {
-                        // return socketIdToUsernameMap[socketId];
                         socketIOServer.to(socketId).emit('username', { username: socketIdToUsernameMap[socketId] });
                     });
             });
@@ -94,8 +93,17 @@ const socketsHandler = ({ server }) => {
             socket.on('selectTile', ({ tileId }) => {
                 const gameHandler = getSocketsCurrentGameHandler({ socket });
                 const [socketId, roomCode] = Object.keys(socket.rooms);
-                gameHandler.applySelectTileToGameState({ tileId, owner: socketIdToUsernameMap[socket.id] });
-                socketIOServer.sockets.in(roomCode).emit('updateGameState', { gameState: gameHandler.gameState });
+                gameHandler.applySelectTileToGameState({
+                    tileId,
+                    owner: socketIdToUsernameMap[socket.id],
+                });
+                socketIOServer.sockets.in(roomCode).emit('updateGameState', {
+                    gameState: gameHandler.gameState,
+                });
+                socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
+                    tileId,
+                    owner: socketIdToUsernameMap[socket.id],
+                });
             });
         });
     }
