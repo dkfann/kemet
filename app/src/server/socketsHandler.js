@@ -43,7 +43,7 @@ const socketsHandler = ({ server }) => {
     }
 
     function joinRoomForSocket({ socket, roomCode, username }) {
-        if (hostedRooms[roomCode]) {
+        if (hostedRooms[roomCode.toUpperCase()]) {
             addUserToRoom({ socket, roomCode, username, isHosting: false });
             const usersInRoom = getUsernamesOfRoomUsers({ roomCode });
             socketIOServer.sockets.in(roomCode).emit('joinRoom', { roomCode, usersInRoom });
@@ -90,39 +90,43 @@ const socketsHandler = ({ server }) => {
                     });
             });
 
-            socket.on('selectTile', ({ tileId }) => {
+            socket.on('applyTileAction', ({ tileId }) => {
                 const gameHandler = getSocketsCurrentGameHandler({ socket });
                 const [socketId, roomCode] = Object.keys(socket.rooms);
-                gameHandler.applySelectTileToGameState({
-                    tileId,
-                    owner: socketIdToUsernameMap[socket.id],
-                });
+
+                const currentGameState = gameHandler.gameState;
+                const user = socketIdToUsernameMap[socketId];
+
+                // If the user currently owns that tile, remove it
+                // Otherwise, make the current user the owner
+                if (!currentGameState[user].includes(tileId)) {
+                    gameHandler.applySelectTileToGameState({
+                        tileId,
+                        owner: socketIdToUsernameMap[socket.id],
+                    });
+
+                    socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
+                        tileId,
+                        owner: socketIdToUsernameMap[socket.id],
+                        type: 'select',
+                    });
+                } else {
+                    gameHandler.applyDeselectTileToGameState({
+                        tileId,
+                        owner: socketIdToUsernameMap[socket.id],
+                    });
+
+                    socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
+                        tileId,
+                        owner: socketIdToUsernameMap[socket.id],
+                        type: 'deselect',
+                    });
+                }
+
                 socketIOServer.sockets.in(roomCode).emit('updateGameState', {
                     gameState: gameHandler.gameState,
-                });
-                socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
-                    tileId,
-                    owner: socketIdToUsernameMap[socket.id],
-                    type: 'select',
                 });
             });
-
-            socket.on('deselectTile', ({ tileId }) => {
-                const gameHandler = getSocketsCurrentGameHandler({ socket });
-                const [socketId, roomCode] = Object.keys(socket.rooms);
-                gameHandler.applyDeselectTileToGameState({
-                    tileId,
-                    owner: socketIdToUsernameMap[socket.id],
-                });
-                socketIOServer.sockets.in(roomCode).emit('updateGameState', {
-                    gameState: gameHandler.gameState,
-                });
-                socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
-                    tileId,
-                    owner: socketIdToUsernameMap[socket.id],
-                    type: 'deselect',
-                });
-            })
         });
     }
 

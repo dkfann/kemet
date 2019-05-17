@@ -91,7 +91,7 @@ export default {
 
     .players-container {
         background-color: #ffe59f;
-        height: 20vh;
+        height: 30vh;
         display: flex;
         flex-direction: column;
         padding: 0.5rem;

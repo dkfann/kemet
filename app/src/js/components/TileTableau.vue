@@ -4,104 +4,189 @@
                 <div class="tile-container">
                     <div
                         :class="tileClass(tile)"
-                        @click="selectTile(tile)"
+                        @click="applyTileAction(tile)"
                         :key="tile.id"
-                        v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1, gameState })"
-                        v-long-press="300"
-                        @long-press-start="deselectTile(tile)"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'red',
+                            level: 1,
+                            gameState,
+                        })"
                     >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 2})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'red',
+                            level: 2,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 3})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'red',
+                            level: 3,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 4})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'red',
+                            level: 4,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 1})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'blue',
+                            level: 1,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 2})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'blue',
+                            level: 2,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 3})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'blue',
+                            level: 3,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'blue', level: 4})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'blue',
+                            level: 4,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 1})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 1})"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 2})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'white',
+                            level: 2,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 3})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'white',
+                            level: 3,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
-                    <div class="tile" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 4})">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="applyTileAction(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'white',
+                            level: 4,
+                            gameState,
+                        })"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
-                        <div>{{ tile.owner }}</div>
                     </div>
                 </div>
             </siema>
@@ -118,15 +203,11 @@
         generateTiles,
         generateTilesByColorAndLevel,
     }from '../tiles/tileUtils';
-    import TileSection from './TileSection.vue';
-    import LongPress from 'vue-directive-long-press';
+    import { TileSection } from './TileSection.vue';
 
     export default {
         name: 'tile-tableau',
         props: ['gameState', 'socket'],
-        directives: {
-            'long-press': LongPress,
-        },
         data() {
             return {
                 generateTilesByColorAndLevel,
@@ -139,8 +220,8 @@
             };
         },
         methods: {
-            selectTile(tile, $event) {
-                this.socket.emit('selectTile', { tileId: tile.id });
+            applyTileAction(tile, $event) {
+                this.socket.emit('applyTileAction', { tileId: tile.id });
             },
             movingHandler(event) {
                 // console.log(event);
@@ -154,9 +235,6 @@
             goToWhiteTiles() {
                 this.$refs.siema.goTo(8);
             },
-            deselectTile(tile) {
-                this.socket.emit('deselectTile', { tileId: tile.id });
-            }
         },
         components: { TileSection },
     }

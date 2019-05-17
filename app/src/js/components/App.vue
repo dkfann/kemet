@@ -52,7 +52,7 @@ export default {
     #app-container {
         display: flex;
         width: 100vw;
-        height: 100vh;
+        height: 100%;
         background-color: #faf6eb;
         font-family: 'Feijoa';
     }

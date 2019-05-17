@@ -31,17 +31,11 @@
     export default {
         name: 'tile-section',
         props: ['color'],
-        created() {
-            
-        },
         data() {
             return {
                 generateTilesByColorAndLevel,
             };
         },
-        methods: {
-
-        }
     }
 </script>
 
