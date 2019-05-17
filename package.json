@@ -24,6 +24,7 @@
     "socket.io-client": "^2.2.0",
     "utf-8-validate": "5.0.2",
     "vue": "^2.5.22",
+    "vue-directive-long-press": "^1.1.0",
     "vue-loader": "^15.5.1",
     "vue-socket.io": "^3.0.4",
     "vue2-siema": "^0.2.2",

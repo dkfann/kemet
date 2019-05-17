@@ -2,7 +2,14 @@
         <div class="tableau">
             <siema ref="siema">
                 <div class="tile-container">
-                    <div :class="tileClass(tile)" @click="selectTile(tile)" :key="tile.id" v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1, gameState })">
+                    <div
+                        :class="tileClass(tile)"
+                        @click="selectTile(tile)"
+                        :key="tile.id"
+                        v-for="tile in generateTilesByColorAndLevel({ color: 'red', level: 1, gameState })"
+                        v-long-press="300"
+                        @long-press-start="deselectTile(tile)"
+                    >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
@@ -112,12 +119,13 @@
         generateTilesByColorAndLevel,
     }from '../tiles/tileUtils';
     import TileSection from './TileSection.vue';
+    import LongPress from 'vue-directive-long-press';
 
     export default {
         name: 'tile-tableau',
         props: ['gameState', 'socket'],
-        created() {
-
+        directives: {
+            'long-press': LongPress,
         },
         data() {
             return {
@@ -145,12 +153,10 @@
             },
             goToWhiteTiles() {
                 this.$refs.siema.goTo(8);
-            }
-        },
-        watch: {
-            gameState: function(val) {
-
             },
+            deselectTile(tile) {
+                this.socket.emit('deselectTile', { tileId: tile.id });
+            }
         },
         components: { TileSection },
     }
@@ -182,7 +188,7 @@
         align-items: center;
         flex-direction: column;
         font-size: 1rem;
-        padding: 1rem;
+        padding: 0.5rem;
     }
 
     .tile-img {

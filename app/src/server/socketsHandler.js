@@ -103,8 +103,26 @@ const socketsHandler = ({ server }) => {
                 socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
                     tileId,
                     owner: socketIdToUsernameMap[socket.id],
+                    type: 'select',
                 });
             });
+
+            socket.on('deselectTile', ({ tileId }) => {
+                const gameHandler = getSocketsCurrentGameHandler({ socket });
+                const [socketId, roomCode] = Object.keys(socket.rooms);
+                gameHandler.applyDeselectTileToGameState({
+                    tileId,
+                    owner: socketIdToUsernameMap[socket.id],
+                });
+                socketIOServer.sockets.in(roomCode).emit('updateGameState', {
+                    gameState: gameHandler.gameState,
+                });
+                socketIOServer.sockets.in(roomCode).emit('updateGameLog', {
+                    tileId,
+                    owner: socketIdToUsernameMap[socket.id],
+                    type: 'deselect',
+                });
+            })
         });
     }
 

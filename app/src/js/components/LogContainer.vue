@@ -11,10 +11,17 @@ export default {
     name: 'log-container',
     props: ['socket'],
     created() {
-        this.socket.on('updateGameLog', ({ tileId, owner }) => {
-            const tiles = generateTiles();
-            const updatedTile = tiles[tileId];
-            this.gameLog.push(`${owner} picked up ${updatedTile.title}`);
+        this.socket.on('updateGameLog', ({ tileId, owner, type }) => {
+            if (type === 'select') {
+                const tiles = generateTiles();
+                const updatedTile = tiles[tileId];
+                this.gameLog.push(`${owner} picked up ${updatedTile.title}`);
+            } else if (type === 'deselect') {
+                const tiles = generateTiles();
+                const updatedTile = tiles[tileId];
+                this.gameLog.push(`${owner} returned ${updatedTile.title}`);
+            }
+
         });
     },
     data() {

@@ -3,9 +3,6 @@
         <div class="top-nav" v-if="!changingUser">
             <div class="current-player">{{ currentUser }}</div>
             <div class="change-player" @click="showChangeUserList">Change Player</div>
-            <!-- <div class="view-red-tiles">Red Tiles</div>
-            <div class="view-blue-tiles">Blue Tiles</div>
-            <div class="view-white-tiles">White Tiles</div> -->
         </div>
         <div class="current-player-tiles" v-if="!changingUser">
             <div :class="tileClass(tile.id)" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
@@ -19,18 +16,6 @@
                 {{ username }}
             </div>
         </div>
-        <!-- <div class="change-user" @click="showChangeUserList">
-            Change User
-        </div> --> 
-        <!-- <div class="current-player-tiles" v-for="tile in getPlayerTiles(username)">
-            {{ tile.key }}
-        </div> -->
-        <!-- <div v-for="username in usernames" class="players-list">
-            <div class="player-username">{{ username }}</div>
-            <div class="player-selected-tiles" v-for="tile in getPlayerTiles(username)">
-                {{ tile.key }}
-            </div>
-        </div> -->
     </div>
 </template>
 
@@ -44,9 +29,6 @@ export default {
         this.socket.on('username', (data) => {
             this.currentUser = data.username;
         });
-        // console.log(this.players);
-        // console.log(this.gameState.redTiles);
-        // console.log(this.socket);
     },
     data() {
         return {

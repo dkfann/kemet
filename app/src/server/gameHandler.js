@@ -11,6 +11,12 @@ class GameHandler {
 
         this.gameState[owner].push(tileId);
     }
+
+    applyDeselectTileToGameState({ tileId, owner }) {
+        if (!this.gameState[owner]) return;
+
+        this.gameState[owner] = this.gameState[owner].filter(id => tileId !== id);
+    }
 }
 
 module.exports = {
