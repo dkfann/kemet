@@ -134,7 +134,11 @@
                         :class="tileClass(tile)"
                         @click="applyTileAction(tile)"
                         :key="tile.id"
-                        v-for="tile in generateTilesByColorAndLevel({ color: 'white', level: 1})"
+                        v-for="tile in generateTilesByColorAndLevel({
+                            color: 'white',
+                            level: 1,
+                            gameState,
+                        })"
                     >
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
