@@ -1,29 +1,28 @@
 <template>
     <div id="app" class="room-setup">
-        <div class="main-title">KEMET</div>
         <div class="prepare-room" v-if="!inRoom">
-            <div class="room-control-container">
-                <label class="username-label" for="username">Username:</label>
-                <input class="username-input" type="text" v-model="username" placeholder="Enter Username" maxlength="16"> 
-            </div>
+            <div class="main-title">Kemet</div>
             <div class="room-control-container host-room">
-                <button @click="hostRoom">HOST A ROOM</button>
+                <label class="username-label" for="username">Username:</label>
+                <input class="username-input" type="text" v-model="username" placeholder="Enter Username" maxlength="10"> 
+                <button class="host-room-button" @click="hostRoom">Host Room</button>
             </div>
             <div class="room-control-container join-room">
                 <label class="join-room-label" for="joinCode">Room Code: </label>
-                <input class="join-room-input" v-model="joinCode" type="text">
-                <button class="join-room-button" @click="joinRoom">JOIN ROOM</button>
+                <input class="join-room-input" v-model="joinCode" type="text" maxLength="4" placeholder="Enter Room Code">
+                <button class="join-room-button" @click="joinRoom">Join Room</button>
             </div>
         </div>
         <div class="room-lobby" v-if="inRoom">
+            <div class="room-lobby-title">Game Lobby</div>
             <div class="room-code">{{ roomCode }}</div>
-            <div class="start-game">
-                <button @click="startGame">Start Game</button>
-            </div>
             <div class="connected-users">
-                <div v-for="user in connectedUsers">
+                <div v-for="user in connectedUsers" :key="user">
                     <div>{{ user }}</div>
                 </div>
+            </div>
+            <div class="start-game">
+                <button @click="startGame">Start Game</button>
             </div>
         </div>
 
@@ -45,7 +44,6 @@ export default {
     },
     created() {
         this.socket.on('hostRoom', ({ roomCode, usersInRoom }) => {
-            console.log('Hosting room: ', roomCode);
             this.roomCode = roomCode;
             this.inRoom = true;
             this.connectedUsers = usersInRoom;
@@ -55,14 +53,6 @@ export default {
             this.roomCode = roomCode;
             this.inRoom = true;
             this.connectedUsers = usersInRoom;
-        });
-
-        this.socket.on('sendGameState', (data) => {
-            console.log(data.gameState);
-        });
-
-        this.socket.on('username', (data) => {
-            console.log(data.username);
         });
     },
     methods: {
@@ -83,34 +73,18 @@ export default {
 
 <style>
     @font-face {
-        font-family: 'Chronicle';
-        src: url('../../assets/fonts/ChronicleDisp-Black.otf');
-    } 
-
-    @font-face {
-        font-family: 'Tiempo Text';
-        src: url('../../assets/fonts/TiemposTextTest-Regular.woff');
+        font-family: 'Feijoa';
+        src: url('../../assets/fonts/Feijoa-Display.woff');
     }
-
-   /* #app {
-        display: grid;
-        background-color: #faf6eb;
-        width: 100vw;
-        height: 100vh;
-        grid-template-columns: 20% 20% 20% 20% 20%;
-        grid-template-rows: 150px 150px 150px;
-        grid-template-areas:
-            "header header header header header"
-            "main main main main main";
-    }
-    */
 
     .room-setup {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         width: 100vw;
         height: 100vh;
+        color: #4b6464;
     }
 
     .main-title {
@@ -119,6 +93,8 @@ export default {
         align-items: center;
         font-size: 5rem;
         grid-area: header;
+        text-transform: uppercase;
+        color: #ff6468;
     }
 
     .username-label {
@@ -126,38 +102,50 @@ export default {
     }
 
     .room-control-container {
-        margin: 0.5rem;
-    }
-
-    .host-room {
         display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        grid-column-start: 2;
+        justify-content: space-around;
+        margin: 0 0.5rem 1rem 0.5rem;
     }
 
-    .join-room {
+    input {
+        font-family: 'Feijoa';
+        margin: 0 1rem;
+        border: 0;
+    }
+
+    button {
+        font-family: 'Feijoa';
+        background-color: #ffe59f;
+        border: 0;
+        color: #4b6464; 
+    }
+
+    .host-room-button,
+    .join-room-button {
+        white-space: nowrap;
+        color: #4b6464;
+    }
+
+    .room-lobby {
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
-        grid-column-start: 4;
+        align-items: center;
+        color: #4b6464;
     }
 
-    .join-room-label {
-        margin-right: 1rem;
-    }
-
-    .join-room-input {
-        margin-right: 1rem;
+    .room-lobby-title {
+        font-size: 3rem;
+        color: #ff6468;
     }
 
     .room-code {
-        grid-row-start: 3;
-        grid-column-start: 3;
         font-size: 3rem;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
+        color: #F89E70;
+    }
+
+    .connected-users {
+        margin-bottom: 1rem;
     }
 </style>
 

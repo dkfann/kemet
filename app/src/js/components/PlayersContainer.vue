@@ -2,7 +2,7 @@
     <div class="players-container">
         <div class="top-nav" v-if="!changingUser">
             <div class="current-player">{{ currentUser }}</div>
-            <div class="change-player" @click="showChangeUserList">Change Player</div>
+            <button class="change-player" @click="showChangeUserList">Change Player</button>
         </div>
         <div class="current-player-tiles" v-if="!changingUser">
             <div :class="tileClass(tile.id)" v-for="tile in getPlayerTiles(currentUser)" :key="tile.id">
@@ -80,11 +80,6 @@ export default {
 
 <style>
     @font-face {
-        font-family: 'Chronicle';
-        src: url('../../assets/fonts/ChronicleDisp-Black.otf');
-    }
-
-    @font-face {
         font-family: 'Feijoa Italic';
         src: url('../../assets/fonts/Feijoa-MediumItalic.woff');
     }
@@ -103,21 +98,20 @@ export default {
         font-size: 2rem;
     }
 
-    .change-user {
-        text-align: right;
+    .change-player {
+        background-color: #fdc631;
     }
 
     .top-nav {
-        /* display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr; */
         display: flex;
         margin-bottom: 1rem;
         justify-content: space-between;
     }
 
-    .red-tile { color: red; }
-    .blue-tile { color: blue; }
-    .white-tile { color: white; }
+    .player-tile { margin-bottom: 0.5rem; }
+    .red-tile { color: #fb4c51; }
+    .blue-tile { color: #2378b9; }
+    .white-tile { color: #787878; }
 
     .current-player-tiles {
         overflow-y: scroll;
@@ -126,6 +120,5 @@ export default {
     .tile-info-desc {
         font-family: 'Feijoa Italic';
     }
-
 </style>
 
