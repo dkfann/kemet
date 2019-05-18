@@ -195,9 +195,9 @@
                 </div>
             </siema>
             <div class="goto-tiles">
-                <div @click="goToRedTiles">Red Tiles</div>
-                <div @click="goToBlueTiles">Blue Tiles</div>
-                <div @click="goToWhiteTiles">White Tiles</div>
+                <button class="goto-tile" @click="goToRedTiles">Red Tiles</button>
+                <button class="goto-tile" @click="goToBlueTiles">Blue Tiles</button>
+                <button class="goto-tile" @click="goToWhiteTiles">White Tiles</button>
             </div>
         </div>
 </template>
@@ -226,9 +226,6 @@
         methods: {
             applyTileAction(tile, $event) {
                 this.socket.emit('applyTileAction', { tileId: tile.id });
-            },
-            movingHandler(event) {
-                // console.log(event);
             },
             goToRedTiles() {
                 this.$refs.siema.goTo(0);
@@ -288,6 +285,7 @@
     .tile-desc {
         font-size: 0.65rem;
         text-align: center;
+        margin-top: 0.25rem;
     }
 
     .goto-tiles {
@@ -295,6 +293,10 @@
         flex-direction: row;
         justify-content: space-around;
         text-transform: uppercase;
+    }
+
+    .goto-tile {
+        background-color: #fdc631;
     }
 
     .is-taken {

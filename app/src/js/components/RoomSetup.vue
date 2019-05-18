@@ -12,6 +12,7 @@
                 <input class="join-room-input" v-model="joinCode" type="text" maxLength="4" placeholder="Enter Room Code">
                 <button class="join-room-button" @click="joinRoom">Join Room</button>
             </div>
+            <div class="error">{{ error }}</div>
         </div>
         <div class="room-lobby" v-if="inRoom">
             <div class="room-lobby-title">Game Lobby</div>
@@ -40,6 +41,7 @@ export default {
             inRoom: false,
             username: '',
             connectedUsers: [],
+            error: '',
         };
     },
     created() {
@@ -53,6 +55,10 @@ export default {
             this.roomCode = roomCode;
             this.inRoom = true;
             this.connectedUsers = usersInRoom;
+        });
+
+        this.socket.on('error', ({ message }) => {
+            this.error = message;
         });
     },
     methods: {
@@ -109,15 +115,17 @@ export default {
 
     input {
         font-family: 'Feijoa';
-        margin: 0 1rem;
+        margin: 0 0.5rem;
         border: 0;
+        padding: 0.25rem;
     }
 
     button {
         font-family: 'Feijoa';
         background-color: #ffe59f;
         border: 0;
-        color: #4b6464; 
+        color: #4b6464;
+        padding: 0.25rem;
     }
 
     .host-room-button,
@@ -146,6 +154,11 @@ export default {
 
     .connected-users {
         margin-bottom: 1rem;
+    }
+
+    .error {
+        text-align: center;
+        color: #ff3500;
     }
 </style>
 

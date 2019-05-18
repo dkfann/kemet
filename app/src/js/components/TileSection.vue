@@ -1,23 +1,23 @@
 <template>
     <div class="tile-section-container">
         <div class="tile-section-container">
-            <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 1})">
+            <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 1})" :key="tile.id">
                 <div>{{ tile.title }}</div>
                 <img :src="tile.img" alt="">
                 <div>{{ tile.owner }}</div>
             </div>
         </div>
-        <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 2})">
+        <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 2})" :key="tile.id">
             <div>{{ tile.title }}</div>
             <img :src="tile.img" alt="">
             <div>{{ tile.owner }}</div>
         </div>
-        <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 3})">
+        <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 3})" :key="tile.id">
             <div>{{ tile.title }}</div>
             <img :src="tile.img" alt="">
             <div>{{ tile.owner }}</div>
         </div>
-        <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 4})">
+        <div class="tile-section" v-for="tile in generateTilesByColorAndLevel({ color: this.color, level: 4})" :key="tile.id">
             <div>{{ tile.title }}</div>
             <img :src="tile.img" alt="">
             <div>{{ tile.owner }}</div>

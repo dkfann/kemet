@@ -1,6 +1,6 @@
 <template>
     <div class="log-container">
-        <span v-for="log in gameLog">{{log}}</span>
+        <span v-for="log in gameLog" :key="log">{{log}}</span>
     </div>
 </template>
 

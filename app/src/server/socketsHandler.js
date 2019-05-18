@@ -44,12 +44,16 @@ const socketsHandler = ({ server }) => {
 
     function joinRoomForSocket({ socket, roomCode, username }) {
         if (hostedRooms[roomCode.toUpperCase()]) {
-            addUserToRoom({ socket, roomCode, username, isHosting: false });
-            const usersInRoom = getUsernamesOfRoomUsers({ roomCode });
-            socketIOServer.sockets.in(roomCode).emit('joinRoom', { roomCode, usersInRoom });
+            if (!getUsernamesOfRoomUsers({ roomCode }).includes(username)) {
+                addUserToRoom({ socket, roomCode, username, isHosting: false });
+                const usersInRoom = getUsernamesOfRoomUsers({ roomCode });
+                socketIOServer.sockets.in(roomCode).emit('joinRoom', { roomCode, usersInRoom });
+            } else {
+                socketIOServer.to(`${socket.id}`).emit('error', { message: 'A user in the room has that username' });
+            }
         }
         else {
-            console.log('Cannot find room');
+            console.warn('Cannot find room');
         }
     }
 
