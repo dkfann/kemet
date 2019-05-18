@@ -113,14 +113,9 @@ export function generateRedTiles() {
                 title: 'Act of God',
                 img: `${imagePath}/act_of_god_red.png`,
                 id: 15,
-                desc: 'Take additional action token',
+                desc: '+1 Action Token',
             },
     };
-
-    // Object.keys(redTiles).forEach((key) => {
-    //     redTiles[key].owner = null;
-    //     redTiles[key].id = key;
-    // });
 
     return redTiles;
 }
@@ -221,7 +216,7 @@ function generateBlueTiles() {
             title: 'Act of God',
             img: `${imagePath}/act_of_god_blue.png`,
             id: 31,
-            desc: 'Take silver action token',
+            desc: '+1 Action Token',
         },
     };
 

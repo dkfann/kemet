@@ -126,6 +126,7 @@ export default {
         border: 0;
         color: #4b6464;
         padding: 0.25rem;
+        border-radius: 4px;
     }
 
     .host-room-button,

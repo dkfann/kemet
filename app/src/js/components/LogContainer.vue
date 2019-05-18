@@ -39,6 +39,7 @@ export default {
         padding: 0.5rem;
         overflow-y: scroll;
         height: 17vh;
+        margin-top: 1rem;
     }
 </style>
 
