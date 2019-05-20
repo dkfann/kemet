@@ -2,7 +2,9 @@ const io = require('socket.io');
 const { GameHandler } = require('./gameHandler');
 
 const socketsHandler = ({ server }) => {
-    const socketIOServer = io(server);
+    const socketIOServer = io(server, {
+         pingTimeout: 9999999,
+    });
     const hostedRooms = {};
     const socketIdToUsernameMap = {};
 
