@@ -3,7 +3,8 @@ const { GameHandler } = require('./gameHandler');
 
 const socketsHandler = ({ server }) => {
     const socketIOServer = io(server, {
-         pingTimeout: 9999999,
+        pintInterval: 15000,
+        pingTimeout: 30000,
     });
     const hostedRooms = {};
     const socketIdToUsernameMap = {};
@@ -94,6 +95,14 @@ const socketsHandler = ({ server }) => {
                     .forEach((socketId) => {
                         socketIOServer.to(socketId).emit('username', { username: socketIdToUsernameMap[socketId] });
                     });
+                
+                // setInterval(() => {
+                //     socketIOServer.sockets.in(roomCode).emit('keepAliveServer');
+                // }, 29000);
+            });
+
+            socket.on('keepAlive', () => {
+                console.log('Detected keep alive'. socket.id);
             });
 
             socket.on('applyTileAction', ({ tileId }) => {

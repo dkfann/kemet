@@ -28,6 +28,10 @@ export default {
         this.socket.on('updateGameState', ({ gameState }) => {
             this.currentGameState = gameState;
         });
+
+        setInterval(() => {
+            this.socket.emit('keepAlive');
+        }, 29000);
     },
     methods: {
         selectItem(item) {
