@@ -99,6 +99,7 @@ const socketsHandler = ({ server }) => {
                 const [socketId, roomCode] = Object.keys(socket.rooms);
 
                 const currentGameState = gameHandler.gameState;
+                if (!currentGameState) return;
                 const user = socketIdToUsernameMap[socketId];
 
                 // If the user currently owns that tile, remove it
