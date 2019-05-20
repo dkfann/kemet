@@ -101,9 +101,9 @@ const socketsHandler = ({ server }) => {
                 // }, 29000);
             });
 
-            socket.on('keepAlive', () => {
-                console.log('Detected keep alive'. socket.id);
-            });
+            // socket.on('keepAlive', () => {
+            //     console.log('Detected keep alive'. socket.id);
+            // });
 
             socket.on('applyTileAction', ({ tileId }) => {
                 const gameHandler = getSocketsCurrentGameHandler({ socket });

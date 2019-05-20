@@ -29,9 +29,9 @@ export default {
             this.currentGameState = gameState;
         });
 
-        setInterval(() => {
-            this.socket.emit('keepAlive');
-        }, 29000);
+        // setInterval(() => {
+        //     this.socket.emit('keepAlive');
+        // }, 29000);
     },
     methods: {
         selectItem(item) {
