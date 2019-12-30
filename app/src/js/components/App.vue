@@ -2,8 +2,8 @@
     <div id="app-container">
         <room-setup v-if="!startedGame" :socket="socket" />
         <game-container
-            v-if="startedGame" 
-            :socket="socket" 
+            v-if="startedGame"
+            :socket="socket"
             :gameState="gameState"
             :connectedUsers="connectedUsers"
         />
@@ -27,11 +27,14 @@ export default {
     },
     created() {
         this.socket = io.connect();
-        this.socket.on('startGame', ({ gameState, connectedUsers }) => {
+        this.socket.on('startGame', ({ roomCode, username, gameState, connectedUsers }) => {
             this.startedGame = true;
-            console.log(gameState);
             this.gameState = gameState;
             this.connectedUsers = connectedUsers;
+            document.cookie = `kemet=${username}:${roomCode}`;
+        });
+        this.socket.on('rejoinGame', ({ username, roomCode }) => {
+            console.log(`Rejoining the game with username ${username} and room code ${roomCode}`);
         })
     },
     components: { RoomSetup, GameContainer },

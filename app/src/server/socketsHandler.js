@@ -70,9 +70,39 @@ const socketsHandler = ({ server }) => {
         return gameHandler;
     }
 
+    function getKemetCookie(cookies) {
+        if (!cookies) return [];
+        const kemetCookie = cookies.match(/kemet=(.*):(\w*)/);
+        console.log('The match is: ', kemetCookie);
+        if  (!kemetCookie) return [];
+
+        const [username, roomCode] = [kemetCookie[1], kemetCookie[2]]
+
+        return [username, roomCode]
+
+        console.log(`The username is: ${username} and the room code is ${roomCode}`);
+    }
+
     function _init() {
         socketIOServer.on('connection', (socket) => {
+            const kemetCookie = getKemetCookie(socket.handshake.headers.cookie);
+            console.log('The kemetCookie is:  ', kemetCookie);
+            if (kemetCookie && kemetCookie.length) {
+                const [username, roomCode] = kemetCookie;
+                socketIOServer.to(socket.id).emit('rejoinGame', { username, roomCode });
+                console.log('The socket id to username map: ',  socketIdToUsernameMap);
+            }
+
+            socket.on('rejoinGame', () => {
+                console.log('rejoining game')
+            })
+
+            // setInterval(() => {
+            //     console.log(socket.id);
+            //     console.log(socket.connected);
+            // }, 10000);
             socket.on('hostRoom', ({ username }) => {
+                console.log(`${username} hosted room`);
                 hostRoomForSocket({ socket, username });
             });
 
@@ -88,6 +118,8 @@ const socketsHandler = ({ server }) => {
                 const usernames = getUsernamesOfRoomUsers({ roomCode });
                 hostedRooms[roomCode].gameHandler = new GameHandler({ socketIOServer, usernames });
                 socketIOServer.sockets.in(roomCode).emit('startGame', {
+                    roomCode,
+                    username: socketIdToUsernameMap[socket.id],
                     gameState: hostedRooms[roomCode].gameHandler.gameState,
                     connectedUsers: getUsernamesOfRoomUsers({ roomCode }),
                 });
@@ -95,15 +127,7 @@ const socketsHandler = ({ server }) => {
                     .forEach((socketId) => {
                         socketIOServer.to(socketId).emit('username', { username: socketIdToUsernameMap[socketId] });
                     });
-                
-                // setInterval(() => {
-                //     socketIOServer.sockets.in(roomCode).emit('keepAliveServer');
-                // }, 29000);
             });
-
-            // socket.on('keepAlive', () => {
-            //     console.log('Detected keep alive'. socket.id);
-            // });
 
             socket.on('applyTileAction', ({ tileId }) => {
                 const gameHandler = getSocketsCurrentGameHandler({ socket });
