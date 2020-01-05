@@ -263,7 +263,7 @@
 
     .tile {
         display: flex;
-        justify-content: end;
+        justify-content: flex-start;
         align-items: center;
         flex-direction: column;
         font-size: 1rem;
