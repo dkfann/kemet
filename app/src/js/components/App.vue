@@ -2,10 +2,11 @@
     <div id="app-container">
         <room-setup v-if="!startedGame" :socket="socket" />
         <game-container
-            v-if="startedGame" 
-            :socket="socket" 
+            v-if="startedGame"
+            :socket="socket"
             :gameState="gameState"
             :connectedUsers="connectedUsers"
+            :username="rejoinUsername"
         />
     </div>
 </template>
@@ -19,6 +20,7 @@ export default {
     name: 'app',
     data() {
         return {
+            rejoinUsername: null,
             socket: null,
             startedGame: false,
             gameState: {},
@@ -27,12 +29,23 @@ export default {
     },
     created() {
         this.socket = io.connect();
-        this.socket.on('startGame', ({ gameState, connectedUsers }) => {
+        this.socket.on('startGame', ({ roomCode, gameState, connectedUsers }) => {
             this.startedGame = true;
-            console.log(gameState);
             this.gameState = gameState;
             this.connectedUsers = connectedUsers;
-        })
+        });
+
+        this.socket.on('rejoinGame', ({
+            username,
+            roomCode,
+            gameState,
+            connectedUsers,
+        }) => {
+            this.startedGame = true;
+            this.gameState = gameState;
+            this.connectedUsers = connectedUsers;
+            this.rejoinUsername = username;
+        });
     },
     components: { RoomSetup, GameContainer },
 };
@@ -57,5 +70,3 @@ export default {
         font-family: 'Feijoa';
     }
 </style>
-
-

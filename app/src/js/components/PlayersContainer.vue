@@ -24,16 +24,29 @@ import generateTiles from '../tiles/tileUtils';
 
 export default {
     name: 'players-container',
-    props: ['players', 'gameState', 'socket'],
+    props: {
+        players: Array,
+        gameState: Object,
+        socket: Object,
+        username: {
+            type: String,
+            default: ''
+        },
+    },
     created() {
-        this.socket.on('username', (data) => {
-            this.currentUser = data.username;
+        this.socket.on('username', ({ username, roomCode }) => {
+            this.currentUser = username;
+            document.cookie = `kemet=${username}:${roomCode}`;
+        });
+
+        this.socket.on('rejoinGame', ({ username }) => {
+            this.currentUser = username;
         });
     },
     data() {
         return {
             usernames: this.players,
-            currentUser: '',
+            currentUser: this.username,
             changingUser: false,
             tileData: generateTiles(),
             tileClass: function(id) {

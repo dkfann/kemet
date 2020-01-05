@@ -1,6 +1,6 @@
 <template>
     <div class="game-container">
-        <players-container :players="connectedUsers" :gameState="currentGameState" :socket="socket"/>
+        <players-container :username="username" :players="connectedUsers" :gameState="currentGameState" :socket="socket"/>
         <tile-tableau :gameState="currentGameState" :socket="socket" />
         <log-container :socket="socket" />
     </div>
@@ -13,7 +13,7 @@ import LogContainer from './LogContainer.vue';
 
 export default {
     name: 'game-container',
-    props: ['gameState', 'socket', 'connectedUsers', 'currentUser'],
+    props: ['gameState', 'socket', 'connectedUsers', 'currentUser', 'username'],
     computed: {
         gameStateKeys() {
             return Object.keys(this.gameState);
