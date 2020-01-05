@@ -2,12 +2,33 @@ const io = require('socket.io');
 const { GameHandler } = require('./gameHandler');
 
 const socketsHandler = ({ server }) => {
-    const socketIOServer = io(server, {
-        pintInterval: 15000,
-        pingTimeout: 30000,
-    });
-    const hostedRooms = {};
-    const socketIdToUsernameMap = {};
+    const socketIOServer = io(server);
+    let hostedRooms = {};
+    let socketIdToUsernameMap = {};
+
+    function getUsernameBySocketId(socketId) {
+        return socketIdToUsernameMap[socketId];
+    }
+
+    function getSocketIdByUsername(username) {
+        const usernameToSocketIdMap = {};
+        Object.keys(socketIdToUsernameMap).forEach(key => {
+            const username = socketIdToUsernameMap[key];
+            usernameToSocketIdMap[username] = key;
+        });
+
+        return usernameToSocketIdMap[username];
+    }
+
+    function updateHostedRoomWithNewSocket({ socketIdToChange, newSocketId, roomCode }) {
+        hostedRooms = {
+            ...hostedRooms,
+            [roomCode]: {
+                gameHandler: hostedRooms[roomCode].gameHandler,
+                users: [...hostedRooms[roomCode].users, newSocketId].filter(id => `${id}` !== `${socketIdToChange}`),
+            },
+        };
+    }
 
     function generateRoomCode() {
         let code = '';
@@ -73,36 +94,51 @@ const socketsHandler = ({ server }) => {
     function getKemetCookie(cookies) {
         if (!cookies) return [];
         const kemetCookie = cookies.match(/kemet=(.*):(\w*)/);
-        console.log('The match is: ', kemetCookie);
         if  (!kemetCookie) return [];
 
         const [username, roomCode] = [kemetCookie[1], kemetCookie[2]]
 
         return [username, roomCode]
-
-        console.log(`The username is: ${username} and the room code is ${roomCode}`);
     }
 
     function _init() {
         socketIOServer.on('connection', (socket) => {
             const kemetCookie = getKemetCookie(socket.handshake.headers.cookie);
-            console.log('The kemetCookie is:  ', kemetCookie);
+            // If a user connects and has a kemet cookie stored when the username is sent back to the user,
+            // reconnect using that username
             if (kemetCookie && kemetCookie.length) {
                 const [username, roomCode] = kemetCookie;
-                socketIOServer.to(socket.id).emit('rejoinGame', { username, roomCode });
-                console.log('The socket id to username map: ',  socketIdToUsernameMap);
+
+                if (hostedRooms[roomCode]) {
+                    // Get the old socket id that used to be associated with that username
+                    // (The previous socket used by the user before reconnecting)
+                    const socketIdToChange = getSocketIdByUsername(username);
+
+                    // Remove the old socket in the socket id to username map and add
+                    // the new socket to the map with that username
+                    delete socketIdToUsernameMap[socketIdToChange];
+                    socketIdToUsernameMap[socket.id] = username;
+
+                    updateHostedRoomWithNewSocket({
+                        roomCode,
+                        socketIdToChange,
+                        newSocketId: socket.id,
+                    });
+
+                    socket.join(roomCode);
+
+                    // Send the newly connected socket the information to repopulate the UI
+                    socketIOServer.to(socket.id).emit('rejoinGame', {
+                        roomCode,
+                        username,
+                        socketId: socket.id,
+                        gameState: hostedRooms[roomCode].gameHandler.gameState,
+                        connectedUsers: getUsernamesOfRoomUsers({ roomCode }),
+                    });
+                }
             }
 
-            socket.on('rejoinGame', () => {
-                console.log('rejoining game')
-            })
-
-            // setInterval(() => {
-            //     console.log(socket.id);
-            //     console.log(socket.connected);
-            // }, 10000);
             socket.on('hostRoom', ({ username }) => {
-                console.log(`${username} hosted room`);
                 hostRoomForSocket({ socket, username });
             });
 
@@ -119,13 +155,15 @@ const socketsHandler = ({ server }) => {
                 hostedRooms[roomCode].gameHandler = new GameHandler({ socketIOServer, usernames });
                 socketIOServer.sockets.in(roomCode).emit('startGame', {
                     roomCode,
-                    username: socketIdToUsernameMap[socket.id],
                     gameState: hostedRooms[roomCode].gameHandler.gameState,
                     connectedUsers: getUsernamesOfRoomUsers({ roomCode }),
                 });
                 Object.keys(socketIOServer.sockets.adapter.rooms[roomCode].sockets)
                     .forEach((socketId) => {
-                        socketIOServer.to(socketId).emit('username', { username: socketIdToUsernameMap[socketId] });
+                        socketIOServer.to(socketId).emit('username', {
+                            roomCode,
+                            username: socketIdToUsernameMap[socketId],
+                        });
                     });
             });
 

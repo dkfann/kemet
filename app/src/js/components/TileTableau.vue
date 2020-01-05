@@ -207,7 +207,7 @@
         generateTiles,
         generateTilesByColorAndLevel,
     }from '../tiles/tileUtils';
-    import { TileSection } from './TileSection.vue';
+    import TileSection from './TileSection.vue';
 
     export default {
         name: 'tile-tableau',
