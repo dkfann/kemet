@@ -329,11 +329,16 @@ function generateWhiteTiles() {
 export function generateTilesByColorAndLevel({ color, level, gameState }) {
     let tiles = null;
     let color_id_adjustment = null;
-    let selectedTiles = [];
+    const selectedTilesMap = {};
+    console.log(gameState)
 
     if (gameState) {
         Object.keys(gameState).forEach(key => {
-            selectedTiles.push(...gameState[key]);
+            if (key !== 'logs') {
+                gameState[key].forEach(tileId => {
+                    selectedTilesMap[tileId] = key
+                });
+            }
         });
     }
 
@@ -363,9 +368,10 @@ export function generateTilesByColorAndLevel({ color, level, gameState }) {
 
     return idsToGrab
             .map(id => {
-                if (selectedTiles.includes(id)) {
-                    tiles[id].owner = 1;
+                if (selectedTilesMap[id]) {
+                    tiles[id].owner = selectedTilesMap[id];
                 }
+
                 return tiles[id];
             });
 }
