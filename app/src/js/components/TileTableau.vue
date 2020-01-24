@@ -15,6 +15,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                <div class="tile-container">
@@ -31,6 +32,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                <div class="tile-container">
@@ -47,6 +49,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -63,6 +66,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -79,6 +83,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -95,6 +100,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -111,6 +117,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -127,6 +134,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -143,6 +151,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -159,6 +168,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -175,6 +185,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
                 <div class="tile-container">
@@ -191,6 +202,7 @@
                         <div class="tile-title">{{ tile.title }}</div>
                         <img class="tile-img" :src="tile.img" alt="">
                         <div class="tile-desc">{{ tile.desc }}</div>
+                        <div class="tile-owner">{{ tile.owner }}</div>
                     </div>
                 </div>
             </siema>

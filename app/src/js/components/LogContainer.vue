@@ -1,6 +1,6 @@
 <template>
     <div class="log-container">
-        <span v-for="log in gameLog" :key="log">{{log}}</span>
+        <span v-for="log in logs" :key="log.tileId">{{showLog(log)}}</span>
     </div>
 </template>
 
@@ -9,25 +9,16 @@ import generateTiles from '../tiles/tileUtils';
 
 export default {
     name: 'log-container',
-    props: ['socket'],
-    created() {
-        this.socket.on('updateGameLog', ({ tileId, owner, type }) => {
-            if (type === 'select') {
-                const tiles = generateTiles();
-                const updatedTile = tiles[tileId];
-                this.gameLog.push(`${owner} picked up ${updatedTile.title}`);
-            } else if (type === 'deselect') {
-                const tiles = generateTiles();
-                const updatedTile = tiles[tileId];
-                this.gameLog.push(`${owner} returned ${updatedTile.title}`);
-            }
-
-        });
-    },
+    props: ['socket', 'logs'],
     data() {
         return {
-            gameLog: [],
+            tiles: generateTiles(),
         };
+    },
+    methods: {
+        showLog({ owner, tileId, type }) {
+            return type === 'select' ? `${owner} picked up ${this.tiles[tileId].title}` : `${owner} returned ${this.tiles[tileId].title}`
+        }
     }
 }
 </script>

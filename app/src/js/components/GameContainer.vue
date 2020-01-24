@@ -2,7 +2,7 @@
     <div class="game-container">
         <players-container :username="username" :players="connectedUsers" :gameState="currentGameState" :socket="socket"/>
         <tile-tableau :gameState="currentGameState" :socket="socket" />
-        <log-container :socket="socket" />
+        <log-container :socket="socket" :logs="currentGameState.logs"/>
     </div>
 </template>
 
